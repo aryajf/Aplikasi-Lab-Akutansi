@@ -8,6 +8,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@chenfengyuan/vue-countdown": "^1.1.5",
     "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.5",
     "debug": "~2.6.9",
@@ -27,6 +28,7 @@
     "nodemon": "^2.0.12",
     "sequelize": "^6.6.5",
     "sequelize-cli": "^6.2.0",
+    "v-pagination-3": "^0.1.6",
     "validatorjs": "^3.22.1"
   }
 }

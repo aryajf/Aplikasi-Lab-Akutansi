@@ -24,6 +24,6 @@ import VueCountdown from '@chenfengyuan/vue-countdown'
 
 require('@/store/subscriber')
 
-store.dispatch('auth/attempt', value).then(() => {
+store.dispatch('auth/attempt', localStorage.getItem('token')).then(() => {
     createApp(App).use(store).use(router).component('pagination', Pagination).component(VueCountdown.name, VueCountdown).mount('#app')
 })

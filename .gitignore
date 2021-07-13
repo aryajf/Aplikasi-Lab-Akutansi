@@ -1,7 +1,7 @@
 # === GIT IGNORE FOR API ===
 api/node_modules/
 api/public/images/avatar/
-# api/.env
+api/.env
 api/api.zip
 
 

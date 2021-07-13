@@ -1,0 +1,134 @@
+/* Google Font CDN Link */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+}
+
+.content {
+    position: relative;
+    min-height: 88vh;
+}
+
+
+::-moz-scrollbar {
+    width: 5px;
+}
+
+::-moz-scrollbar-track {
+    background: #fff;
+}
+
+::-moz-scrollbar-thumb {
+    background: #3c4652;
+}
+
+// BAHAN
+.break {
+    clear: both;
+}
+
+.cursor-not-allowed {
+    cursor: not-allowed;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+
+.bg-az {
+    // alizarin
+    background: #EC615B !important;
+    color: white !important;
+}
+
+.bg-wa {
+    // wet asphalt
+    background: #323B46 !important;
+    color: white !important;
+}
+
+.bg-outline-blue {
+    background: #E7F1FF;
+    color: #0C63E6 !important;
+}
+
+.bg-outline-green {
+    background: #deffe8;
+    color: #2ecc71 !important;
+}
+
+.bg-outline-red {
+    background: #ffd8d4;
+    color: #e74c3c !important;
+}
+
+.bg-outline-yellow {
+    background: #fff6e6;
+    color: #f1c40f !important;
+}
+
+.outline-wa {
+    border: 1px solid #323B46 !important;
+    color: #323B46;
+}
+
+.text-az {
+    color: #EC615B;
+}
+
+.text-wa {
+    color: #323B46;
+}
+
+textarea:hover,
+input:hover,
+textarea:active,
+input:active,
+textarea:focus,
+input:focus,
+button:focus,
+button:active,
+button:hover,
+label:focus,
+.btn:active,
+.btn.active {
+    outline: 0px !important;
+    -webkit-appearance: none;
+    box-shadow: none !important;
+}
+
+button:focus,
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border-color: #ccc;
+    box-shadow: 0 0 0 #ccc inset, 0 0 0 #ccc;
+    outline: 0 none;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.page-heading {
+    font-size: 25px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.page-line-heading {
+    width: 70px;
+    height: 2px;
+    background: #EC615B;
+    margin-bottom: 20px;
+}
+
+@media screen and (max-width: 768px) {
+    .page-heading {
+        font-size: 20px;
+    }
+}

@@ -1,17 +1,15 @@
 /* Google Font CDN Link */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
 
+body{
+    overflow-x: hidden
+}
+
 * {
     margin: 0;
     padding: 0;
     font-family: "Poppins", sans-serif;
 }
-
-.content {
-    position: relative;
-    min-height: 88vh;
-}
-
 
 ::-moz-scrollbar {
     width: 5px;
@@ -108,27 +106,4 @@ input[type="password"]:focus {
     border-color: #ccc;
     box-shadow: 0 0 0 #ccc inset, 0 0 0 #ccc;
     outline: 0 none;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.page-heading {
-    font-size: 25px;
-    font-weight: 600;
-    margin: 0;
-}
-
-.page-line-heading {
-    width: 70px;
-    height: 2px;
-    background: #EC615B;
-    margin-bottom: 20px;
-}
-
-@media screen and (max-width: 768px) {
-    .page-heading {
-        font-size: 20px;
-    }
 }

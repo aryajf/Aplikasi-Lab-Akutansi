@@ -1,23 +1,25 @@
 <template>
   <div>
     <navbar />
-    <router-view v-slot="{Component}">
+    <!-- <router-view v-slot="{Component}">
       <transition name="route" mode="out-in">
           <component :is='Component'></component>
       </transition>
+    </router-view> -->
+    <router-view>
     </router-view>
-    <Footer />
+    <!-- <Footer /> -->
   </div>
 </template>
 
 <script>
 // import appConfig from "@/config/app"
 import Navbar from "@/components/Navbar.vue"
-import Footer from "@/components/Footer.vue"
+// import Footer from "@/components/Footer.vue"
 export default {
   components: {
     Navbar,
-    Footer,
+    // Footer,
   },
 }
 </script>

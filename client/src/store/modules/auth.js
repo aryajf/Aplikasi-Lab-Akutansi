@@ -25,7 +25,7 @@ export default({
         }
     },
     actions: {
-        async attempt({commit, state, dispatch}, token){
+        async attempt({commit, state}, token){
             if(token){
                 commit('SET_TOKEN', token)
             }

@@ -1,35 +1,129 @@
 <template>
   <div>
+    <navbar bg="bg-navbar"/>
     <div class="homepage py-5">
       <div class="container">
         <div class="row homepage-header">
-          <h1 data-aos="zoom-in" data-aos-duration="1000" class="d-flex align-items-center justify-content-center">Selamat Datang Di Website</h1>
-          <h3 data-aos="zoom-in-up" data-aos-duration="1500" class="d-flex align-items-center justify-content-center">Laboratorium Akuntansi Menengah</h3>
+          <div class="col-md-7">
+          <h1 data-aos="zoom-in" data-aos-duration="1000">Welcome to Labamen</h1>
+          <h3 data-aos="zoom-in-up" data-aos-duration="1500">Laboratorium Akuntansi Menengah</h3>
+          </div>
+          <div class="col-md-4">
+            <img data-aos="fade-left" data-aos-duration="1500" id="homepage-1" src="@/assets/images/homepage-3.png" alt="">
+          </div>
         </div>
       </div>
-      <img id="homepage-bottom-1" data-aos-offset="-500" data-aos="fade-up-right" data-aos-duration="1000" src="@/assets/images/homepage-5.png" alt="">
-      <img id="homepage-bottom-2" data-aos-offset="-500" data-aos="fade-up" class="ms-auto me-auto" data-aos-duration="1500" src="@/assets/images/homepage-1.png" alt="">
-      <img id="homepage-bottom-3" data-aos-offset="-500" data-aos="fade-up-left" data-aos-duration="1000" src="@/assets/images/homepage-2.png" alt="">
+      <svg id="homepage-bottom-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#fff" fill-opacity="1" d="M0,160L14.1,176C28.2,192,56,224,85,202.7C112.9,181,141,107,169,85.3C197.6,64,226,96,254,96C282.4,96,311,64,339,58.7C367.1,53,395,75,424,69.3C451.8,64,480,32,508,26.7C536.5,21,565,43,593,48C621.2,53,649,43,678,53.3C705.9,64,734,96,762,96C790.6,96,819,64,847,85.3C875.3,107,904,181,932,186.7C960,192,988,128,1016,117.3C1044.7,107,1073,149,1101,176C1129.4,203,1158,213,1186,224C1214.1,235,1242,245,1271,256C1298.8,267,1327,277,1355,256C1383.5,235,1412,181,1426,154.7L1440,128L1440,320L1425.9,320C1411.8,320,1384,320,1355,320C1327.1,320,1299,320,1271,320C1242.4,320,1214,320,1186,320C1157.6,320,1129,320,1101,320C1072.9,320,1045,320,1016,320C988.2,320,960,320,932,320C903.5,320,875,320,847,320C818.8,320,791,320,762,320C734.1,320,706,320,678,320C649.4,320,621,320,593,320C564.7,320,536,320,508,320C480,320,452,320,424,320C395.3,320,367,320,339,320C310.6,320,282,320,254,320C225.9,320,198,320,169,320C141.2,320,113,320,85,320C56.5,320,28,320,14,320L0,320Z"></path></svg>
     </div>
-    <div class="aboutpage py-5">
+    <div id="aboutpage" class="aboutpage pb-5">
       <div class="container">
         <div class="row homepage-header">
-          <h1 data-aos="zoom-in" data-aos-duration="1000" class="d-flex align-items-center justify-content-center">Selamat Datang Di Website</h1>
-          <h3 data-aos="zoom-in-up" data-aos-duration="1500" class="d-flex align-items-center justify-content-center">Laboratorium Akuntansi Menengah</h3>
+          <h1 data-aos="zoom-in" data-aos-duration="1000" class="d-flex align-items-center justify-content-center">Our News & Article</h1>
+          <h3 data-aos="zoom-in-up" data-aos-duration="1500" class="d-flex align-items-center justify-content-center">Disini kami menyajikan info & artikel terbaru kami</h3>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <div class="card mb-3" style="width: 20rem;">
+                <img src="" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <ScrollTop />
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <Button label="Read" icon="pi pi-check" />
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card mb-3" style="width: 20rem;">
+                <img src="" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <ScrollTop />
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <Button label="Read" icon="pi pi-check" />
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card mb-3" style="width: 20rem;">
+                <img src="" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <ScrollTop />
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <Button label="Read" icon="pi pi-check" />
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card mb-3" style="width: 20rem;">
+                <img src="" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <ScrollTop />
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <Button label="Read" icon="pi pi-check" />
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card mb-3" style="width: 20rem;">
+                <img src="" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <ScrollTop />
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <Button label="Read" icon="pi pi-check" />
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card mb-3" style="width: 20rem;">
+                <img src="" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <Button label="Read" icon="pi pi-check" />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <svg id="homepage-bottom-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#f3f4f5" fill-opacity="1" d="M0,96L34.3,106.7C68.6,117,137,139,206,165.3C274.3,192,343,224,411,234.7C480,245,549,235,617,218.7C685.7,203,754,181,823,176C891.4,171,960,181,1029,181.3C1097.1,181,1166,171,1234,176C1302.9,181,1371,203,1406,213.3L1440,224L1440,320L1405.7,320C1371.4,320,1303,320,1234,320C1165.7,320,1097,320,1029,320C960,320,891,320,823,320C754.3,320,686,320,617,320C548.6,320,480,320,411,320C342.9,320,274,320,206,320C137.1,320,69,320,34,320L0,320Z"></path></svg>
-      <img id="homepage-bottom-1" data-aos-offset="-500" data-aos="fade-up-right" data-aos-duration="1000" src="@/assets/images/homepage-5.png" alt="">
-      <img id="homepage-bottom-2" data-aos-offset="-500" data-aos="fade-up" class="ms-auto me-auto" data-aos-duration="1500" src="@/assets/images/homepage-1.png" alt="">
-      <img id="homepage-bottom-3" data-aos-offset="-500" data-aos="fade-up-left" data-aos-duration="1000" src="@/assets/images/homepage-2.png" alt="">
+      <svg id="homepage-bottom-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+      <linearGradient x1="0" y1="100%" x2="100%" y2="100%" id="gradient">
+        <stop stop-color="#1C96BF" offset="0%"/>
+        <stop stop-color="#2038B5" offset="100%"/>
+      </linearGradient>
+      <path fill="url(#gradient)" fill-opacity="1" d="M0,192L18.5,197.3C36.9,203,74,213,111,197.3C147.7,181,185,139,222,101.3C258.5,64,295,32,332,69.3C369.2,107,406,213,443,224C480,235,517,149,554,149.3C590.8,149,628,235,665,266.7C701.5,299,738,277,775,245.3C812.3,213,849,171,886,170.7C923.1,171,960,213,997,213.3C1033.8,213,1071,171,1108,133.3C1144.6,96,1182,64,1218,58.7C1255.4,53,1292,75,1329,74.7C1366.2,75,1403,53,1422,42.7L1440,32L1440,320L1421.5,320C1403.1,320,1366,320,1329,320C1292.3,320,1255,320,1218,320C1181.5,320,1145,320,1108,320C1070.8,320,1034,320,997,320C960,320,923,320,886,320C849.2,320,812,320,775,320C738.5,320,702,320,665,320C627.7,320,591,320,554,320C516.9,320,480,320,443,320C406.2,320,369,320,332,320C295.4,320,258,320,222,320C184.6,320,148,320,111,320C73.8,320,37,320,18,320L0,320Z"></path></svg>
+    </div>
+    <div class="contact py-5">
+      <div class="container">
+        <div class="row contact-header">
+          <h1 data-aos="zoom-in" data-aos-duration="1000" class="d-flex align-items-center justify-content-center">Contact Us</h1>
+          <h3 data-aos="zoom-in-up" data-aos-duration="1500" class="d-flex align-items-center justify-content-center">(021)-653-2678</h3>
+        </div>
+      </div>
+      <svg id="contact-bottom-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#fff" fill-opacity="1" d="M0,192L18.5,197.3C36.9,203,74,213,111,197.3C147.7,181,185,139,222,101.3C258.5,64,295,32,332,69.3C369.2,107,406,213,443,224C480,235,517,149,554,149.3C590.8,149,628,235,665,266.7C701.5,299,738,277,775,245.3C812.3,213,849,171,886,170.7C923.1,171,960,213,997,213.3C1033.8,213,1071,171,1108,133.3C1144.6,96,1182,64,1218,58.7C1255.4,53,1292,75,1329,74.7C1366.2,75,1403,53,1422,42.7L1440,32L1440,320L1421.5,320C1403.1,320,1366,320,1329,320C1292.3,320,1255,320,1218,320C1181.5,320,1145,320,1108,320C1070.8,320,1034,320,997,320C960,320,923,320,886,320C849.2,320,812,320,775,320C738.5,320,702,320,665,320C627.7,320,591,320,554,320C516.9,320,480,320,443,320C406.2,320,369,320,332,320C295.4,320,258,320,222,320C184.6,320,148,320,111,320C73.8,320,37,320,18,320L0,320Z"></path></svg>
+      <img id="contact-bottom-1" data-aos-offset="-200" data-aos="fade-up-right" data-aos-duration="1000" src="@/assets/images/homepage-5.png" alt="">
+      <img id="contact-bottom-2" data-aos-offset="-200" data-aos="fade-up" class="ms-auto me-auto" data-aos-duration="1500" src="@/assets/images/homepage-1.png" alt="">
+      <img id="contact-bottom-3" data-aos-offset="-200" data-aos="fade-up-left" data-aos-duration="1000" src="@/assets/images/homepage-2.png" alt="">
+      
     </div>
   </div>
 </template>
 
 <script>
+import Button from 'primevue/button'
 import Mixins from "@/mixins"
+import Navbar from "@/components/Navbar.vue"
 export default {
     mixins: [Mixins],
+    components:{
+      Navbar,
+      Button
+    }
 }
 </script>
 

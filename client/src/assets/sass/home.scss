@@ -4,18 +4,25 @@
     position: relative;
     overflow: hidden;
     h1{
+        margin: 50px 0 0;
         color: #fff;
     }
     h3{
         color: #fff;
     }
     .homepage-header{
-        margin: 120px 0;
+        margin: 50px 0 0;
     }
 
     #homepage-bottom-wave, #homepage-bottom-2{
         position:absolute;
-        bottom: 0;
+        bottom: -10px;
+        left:0;
+        right: 0;
+    }
+    #homepage-up-wave{
+        position:absolute;
+        top: 0;
         left:0;
         right: 0;
     }
@@ -33,14 +40,22 @@
 }
 .aboutpage{
     background-image: #fff;
-    height: 100vh;
     position: relative;
     overflow: hidden;
+    .container{
+        margin-bottom:250px;
+    }
+    .card{
+        transition: all .4s ease-out;
+        &:hover{
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+        }
+    }
     h1{
-        color: #fff;
+        color: #333;
     }
     h3{
-        color: #fff;
+        color: #333;
     }
     .homepage-header{
         margin: 120px 0;
@@ -48,7 +63,7 @@
 
     #homepage-bottom-wave, #homepage-bottom-2{
         position:absolute;
-        bottom: 0;
+        bottom: -20px;
         left:0;
         right: 0;
     }
@@ -62,5 +77,54 @@
         position:absolute;
         bottom: 0;
         right: 0;
+    }
+}
+
+.contact{
+    background-image: linear-gradient(to right, #1C96BF, #2038B5);
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    h1{
+        margin: 50px 0 0;
+        color: #fff;
+    }
+    h3{
+        color: #fff;
+    }
+    .contact-header{
+        margin: 50px 0 0;
+    }
+
+    #contact-bottom-wave, #contact-bottom-2{
+        position:absolute;
+        bottom: -10px;
+        left:0;
+        right: 0;
+    }
+    #contact-up-wave{
+        position:absolute;
+        top: 0;
+        left:0;
+        right: 0;
+    }
+    #contact-bottom-1{
+        position:absolute;
+        bottom: 0;
+        left:0;
+        right: 0;
+    }
+    #contact-bottom-3{
+        position:absolute;
+        bottom: 0;
+        right: 0;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .homepage{
+        #homepage-1{
+            width: 30rem;
+        }
     }
 }

@@ -36,6 +36,9 @@ body{
     cursor: pointer;
 }
 
+.bg-navbar {
+    background-image: linear-gradient(to right, #1C96BF, #2038B5) !important;
+}
 
 .bg-az {
     // alizarin
@@ -52,6 +55,10 @@ body{
 .bg-outline-blue {
     background: #E7F1FF;
     color: #0C63E6 !important;
+}
+
+.bg-blue {
+    background: #0C63E6 !important;
 }
 
 .bg-outline-green {

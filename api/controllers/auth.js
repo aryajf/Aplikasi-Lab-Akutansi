@@ -176,7 +176,6 @@ module.exports = {
                 alamat: user.alamat,
                 foto_ktp: user.foto_ktp,
                 user_ktp: user.user_ktp,
-                user_status: user.user_status,
                 role: user.role,
                 email_status: user.email_status,
                 token_expired_at: user.token_expired_at
@@ -373,98 +372,6 @@ module.exports = {
             })
         }
     },
-    updateIdentity: async (req, res) => {
-        let user = await findUser(req.decoded.email)
-
-        let userReq = {
-            foto_ktp: user.foto_ktp,
-            user_ktp: user.user_ktp,
-            user_status: 'Verified'
-        }
-
-        if(!req.files.foto_ktp && !req.files.user_ktp){
-            userReq.foto_ktp = null
-            userReq.user_ktp = null
-        }else if(req.files.foto_ktp && req.files.user_ktp){
-            userReq.foto_ktp = req.files.foto_ktp[0].filename
-            userReq.user_ktp = req.files.user_ktp[0].filename
-        }else if(!req.files.foto_ktp){
-            userReq.user_ktp = req.files.user_ktp[0].filename
-            deleteFile(req.files.user_ktp[0].path)
-        }else if(!req.files.user_ktp){
-            userReq.foto_ktp = req.files.foto_ktp[0].filename
-            deleteFile(req.files.foto_ktp[0].path)
-        }
-
-        if(userReq.foto_ktp === null){
-            res.status(400).json({
-                message: 'Foto KTP belum anda tambahkan',
-                status: false
-            })
-            return
-        }else if(userReq.user_ktp === null){
-            res.status(400).json({
-                message: 'Foto Selfie dengan KTP belum anda tambahkan',
-                status: false
-            })
-            return
-        }
-
-        try{
-            makeDirectory(fotoKtpPath)
-            makeDirectory(userKtpPath)
-            compressImage('public/uploads/'+req.files.foto_ktp[0].filename, fotoKtpPath, req.files.foto_ktp[0].path)
-            compressImage('public/uploads/'+req.files.user_ktp[0].filename, userKtpPath, req.files.user_ktp[0].path)
-            deleteFile(fotoKtpPath + user.foto_ktp)
-            deleteFile(userKtpPath + user.user_ktp)
-
-            user.update(userReq).then(data => {
-                res.status(200).json({
-                    data: {
-                        foto_ktp: data.foto_ktp,
-                        user_ktp: data.user_ktp
-                    },
-                    message: 'Identitas berhasil diunggah',
-                    request: {
-                        method: req.method,
-                        url: process.env.BASE_URL + 'user/' + req.decoded.email
-                    },
-                    status: true,
-                })
-            })
-        }catch(err){
-            res.status(400).json({
-                error: err.message,
-                message: 'Terjadi kesalahan saat mengedit profile',
-                status: false
-            })
-        }
-    },
-    logout: async (req, res) => {
-        let user = await findUser(req.decoded.email)
-        let userReq = {
-            token_expired_at: null
-        }
-
-        try{
-            user.update(userReq).then(() => {
-                res.status(200).json({
-                    message: 'Berhasil Logout',
-                    request: {
-                        method: req.method,
-                        url: process.env.BASE_URL + 'logout/' + req.decoded.email
-                    },
-                    status: true,
-                })
-            })
-        }catch(err){
-            res.status(400).json({
-                error: err.message,
-                message: 'Terjadi kesalahan saat logout',
-                status: false
-            })
-        }
-    },
 }
 
 function findUser(email){
@@ -511,11 +418,6 @@ function userValidation(dataRequest, url){
             nama: 'required|min:3',
             no_telp: 'required|numeric|min:10',
             alamat: 'required|min:10',
-        }
-    }else if(url == '/profile/updateIdentity'){
-        rules = {
-            foto_ktp: 'required',
-            user_ktp: 'required'
         }
     }
 

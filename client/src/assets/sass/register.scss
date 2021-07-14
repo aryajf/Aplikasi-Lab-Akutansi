@@ -1,0 +1,23 @@
+#register{
+    background-image: linear-gradient(to right, #FFB6C1, #add8e6);
+    #register-img-1{
+        position:absolute;
+        display: none;
+        bottom: 0;
+        right: 10rem;
+    }
+    #register-img-2{
+        position:absolute;
+        display: none;
+        top: 2rem;
+        left: 5rem;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    #register{
+        #register-img-1, #register-img-2{
+            display: block;
+        }
+    }
+}

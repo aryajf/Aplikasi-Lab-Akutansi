@@ -4,7 +4,7 @@
         <imageCropper />
         <div id="profile" class="container-fluid">
             <div style="height:100vh;" class="row align-middle align-items-center d-flex justify-content-center">
-                <div class="card" data-aos="fade-down" data-aos-offset="-500" data-aos-duration="1500">
+                <div class="card" style="width:90%;" data-aos="fade-down" data-aos-offset="-500" data-aos-duration="1500">
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
@@ -16,7 +16,13 @@
                                     <button class="btn rounded-circle shadow" data-bs-toggle="modal" data-bs-target="#avatarModal"><i class="uil uil-pen"></i></button>
                                     <img class="rounded-circle shadow-sm" src="@/assets/images/no-avatar.png" alt="avatar">
                                 </div>
-                                <p class="text-center fw-bold">{{user.nama}}</p>
+                                <p class="text-center fw-bolder">{{user.nama}}</p>
+                                <div class="text-center text-wa">
+                                Online berakhir dalam
+                                <span class="fw-bold d-block">
+                                    <vue-countdown v-if="user.token_expired_at" :time="countDown(user.token_expired_at)" v-slot="{ hours, minutes, seconds }">{{ hours }} jam, {{ minutes }} menit, {{ seconds }} detik.</vue-countdown>
+                                </span>
+                            </div>
                             </div>
                             <div class="col">
                                 <div class="row">
@@ -26,7 +32,7 @@
                                             </router-link>
                                     </div>
                                     <div class="col">
-                                        <h5 class="card-title text-end">Login</h5>
+                                        <h5 class="card-title text-end">Update Profile</h5>
                                     </div>
                                 </div>
                                 <hr>
@@ -53,7 +59,7 @@
                                     <div class="col">
                                         <span class="p-field p-float-label p-input-icon-left w-100">
                                             <i class="pi pi-map-marker"></i>        
-                                            <Textarea :class="{'p-invalid': formErrors.alamat && formErrors.alamat.length > 0}" id="alamat" v-model="user.alamat" :autoResize="true" rows="2" cols="30" class="w-100" />
+                                            <Textarea :class="{'p-invalid': formErrors.alamat && formErrors.alamat.length > 0}" id="alamat" v-model="user.alamat" :autoResize="true" rows="4" cols="30" class="w-100" />
                                             <label for="alamat">Alamat</label>
                                         </span>
                                         <small class="p-error" v-if="formErrors.alamat">*{{formErrors.alamat[0]}}</small>
@@ -63,6 +69,11 @@
                                     <div class="col">
                                         <Button class="p-button-success" type="submit" label="Submit" iconPos="right" :disabled="btnLoading" :icon="btnLoading ? 'pi pi-spin pi-spinner' : 'pi pi-check'" />
                                     </div>
+                                </div>
+                                <div class="row my-4">
+                                    <router-link to="/profile/password">
+                                        <Button label="Change Password" class="p-button-text" icon="pi pi-arrow-right" iconPos="right" />
+                                    </router-link>
                                 </div>
                                 </form>
                                 </div>
@@ -80,8 +91,10 @@ import InputText from 'primevue/inputtext'
 import Textarea from 'primevue/textarea'
 import imageCropper from "@/components/imageCropper.vue";
 import { mapGetters } from "vuex"
+import Mixins from "@/mixins"
 
 export default {
+    mixins: [Mixins],
     data(){
         return {
             form:{

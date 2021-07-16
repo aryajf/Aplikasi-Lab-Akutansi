@@ -16,7 +16,6 @@ router.get('/', function(req, res, next) {
 // AUTH
 router.post('/login', auth.login)
 router.post('/register', auth.register)
-router.get('/logout', checkAuth, auth.logout)
 router.get('/profile', checkAuth, auth.profile)
 router.put('/profile/update', checkAuth, fileUpload.single('avatar'), auth.updateProfile)
 router.put('/verify/:email/:token', auth.verifyEmail)

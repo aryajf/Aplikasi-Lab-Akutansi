@@ -102,7 +102,7 @@ module.exports = {
                 },{
                     alamat : {[Op.like]: `%${req.params.keyword}%`},
                 },{
-                    no_telp : {[Op.like]: `%${req.params.keyword}%`},
+                    phone : {[Op.like]: `%${req.params.keyword}%`},
                 }],
                 role: 'Member',
                 user_status:req.params.status
@@ -136,7 +136,7 @@ module.exports = {
                 },{
                     alamat : {[Op.like]: `%${req.params.keyword}%`},
                 },{
-                    no_telp : {[Op.like]: `%${req.params.keyword}%`},
+                    phone : {[Op.like]: `%${req.params.keyword}%`},
                 }],
                 role: 'Member'
             }}).then(data => {

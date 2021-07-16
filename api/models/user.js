@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     nama: DataTypes.STRING,
     password: DataTypes.STRING,
-    no_telp: DataTypes.INTEGER,
+    phone: DataTypes.INTEGER,
     avatar: DataTypes.STRING,
     alamat: DataTypes.STRING,
     role: DataTypes.ENUM('Admin', 'Member'),

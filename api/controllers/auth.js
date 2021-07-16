@@ -1,4 +1,4 @@
-const {User, Contact} = require('../models')
+const {User} = require('../models')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const crypto = require("crypto")
@@ -8,10 +8,8 @@ const Validator = require('validatorjs')
 const validatorMessage = require('../config/validatorMessage')
 const path = require('path')
 const avatarPath = path.join(__dirname, '../public/images/avatar/')
-const userKtpPath = path.join(__dirname, '../public/images/user-ktp/')
-const fotoKtpPath = path.join(__dirname, '../public/images/ktp/')
 const {JWT_SECRET, JWT_SECRET_EXPIRES, BASE_URL, MAIL_FROM_ADDRESS} = process.env
-const {makeDirectory, compressImage, deleteFile} = require('../config/mixins')
+const {compressImage, deleteFile} = require('../config/mixins')
 
 module.exports = {
     login: async(req, res) => {
@@ -100,8 +98,10 @@ module.exports = {
         }
 
         const userReq = {
-            email: req.body.email,
             nama: req.body.nama,
+            phone: req.body.phone,
+            email: req.body.email,
+            alamat: req.body.alamat,
             password: req.body.password,
             confirmPassword: req.body.confirmPassword
         }
@@ -124,13 +124,13 @@ module.exports = {
                     token: token
                 })
 
-                let transporter = nodemailer.createTransport(emailConfig)
-                await transporter.sendMail({
-                    from: MAIL_FROM_ADDRESS,
-                    to: req.body.email,
-                    subject: "Verifikasi email - pojoklaku.com",
-                    html: `<a href='${BASE_URL}verify/${req.body.email}/${token}' target='_blank'>klik link disini gc</a>`,
-                })
+                // let transporter = nodemailer.createTransport(emailConfig)
+                // await transporter.sendMail({
+                //     from: MAIL_FROM_ADDRESS,
+                //     to: req.body.email,
+                //     subject: "Verifikasi email - pojoklaku.com",
+                //     html: `<a href='${BASE_URL}verify/${req.body.email}/${token}' target='_blank'>klik link disini gc</a>`,
+                // })
 
                 if(newUser.token){
                     setTimeout(async() => {
@@ -171,7 +171,7 @@ module.exports = {
             data: {
                 email: user.email,
                 nama: user.nama,
-                no_telp: user.no_telp,
+                phone: user.phone,
                 avatar: user.avatar,
                 alamat: user.alamat,
                 foto_ktp: user.foto_ktp,
@@ -319,13 +319,13 @@ module.exports = {
         let user = await findUser(req.decoded.email)
         let userReq = {
             nama: req.body.nama,
-            no_telp: req.body.no_telp,
+            phone: req.body.phone,
             avatar: user.avatar,
             alamat: req.body.alamat,
         }
 
-        if(userReq.no_telp == 'null'){
-            userReq.no_telp = ''
+        if(userReq.phone == 'null'){
+            userReq.phone = ''
         }
 
         if(userReq.alamat == 'null'){
@@ -392,7 +392,9 @@ function userValidation(dataRequest, url){
     if(url == '/register'){
         rules = {
             nama: 'required|min:3',
+            phone: 'required|min:5',
             email: 'required|email|min:5',
+            alamat: 'required|min:10',
             password: 'required|min:5',
             confirmPassword: 'required|min:5|same:password'
         }
@@ -416,7 +418,7 @@ function userValidation(dataRequest, url){
     }else if(url == '/profile/update'){
         rules = {
             nama: 'required|min:3',
-            no_telp: 'required|numeric|min:10',
+            phone: 'required|numeric|min:10',
             alamat: 'required|min:10',
         }
     }

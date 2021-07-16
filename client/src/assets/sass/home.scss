@@ -109,12 +109,14 @@
         right: 0;
     }
     #contact-bottom-1{
+        display: none;
         position:absolute;
         bottom: 0;
         left:0;
         right: 0;
     }
     #contact-bottom-3{
+        display: none;
         position:absolute;
         bottom: 0;
         right: 0;
@@ -125,6 +127,11 @@
     .homepage{
         #homepage-1{
             width: 30rem;
+        }
+    }
+    .contact{
+        #contact-bottom-1,#contact-bottom-3{
+            display: block;
         }
     }
 }

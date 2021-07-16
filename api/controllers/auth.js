@@ -35,11 +35,15 @@ module.exports = {
         if(!user){
             res.status(404).json({email: userReq.email, message: 'User tidak terdaftar', status: false})
         }else{
-            if(!verifyPassword(userReq.password, user.password)) res.status(400).json({message: 'Kombinasi email dan password gk sesuai', status: false})
+            if(!verifyPassword(userReq.password, user.password)){
+                res.status(400).json({message: 'Kombinasi email dan password gk sesuai', status: false})
+                return
+            }
 
-            if(user.email_status != 'Verified') res.status(400).json({message: 'Verifikasi Email akun anda terlebih dahulu di Gmail', status: false})
-
-            if(user.email_status != 'Verified') res.status(400).json({message: 'Verifikasi Email akun anda terlebih dahulu di Gmail', status: false})
+            if(user.email_status != 'Verified') {
+                res.status(400).json({message: 'Verifikasi Email akun anda terlebih dahulu di Gmail', status: false})
+                return
+            }
 
             const expiresToken = parseInt(JWT_SECRET_EXPIRES)
 
@@ -89,13 +93,13 @@ module.exports = {
         }
     },
     register: async(req, res) => {
-        if(!req.body.tokenRecaptcha){
-            res.status(400).json({
-                message: 'Human Verification belum anda centang',
-                status: false,
-            })
-            return
-        }
+        // if(!req.body.tokenRecaptcha){
+        //     res.status(400).json({
+        //         message: 'Human Verification belum anda centang',
+        //         status: false,
+        //     })
+        //     return
+        // }
 
         const userReq = {
             nama: req.body.nama,
@@ -174,8 +178,6 @@ module.exports = {
                 phone: user.phone,
                 avatar: user.avatar,
                 alamat: user.alamat,
-                foto_ktp: user.foto_ktp,
-                user_ktp: user.user_ktp,
                 role: user.role,
                 email_status: user.email_status,
                 token_expired_at: user.token_expired_at

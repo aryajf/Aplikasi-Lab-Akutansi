@@ -1,6 +1,5 @@
 import axios from 'axios'
 import router from '@/router'
-// import appConfig from "@/config/app"
 
 export default({
     namespaced: true,
@@ -40,6 +39,22 @@ export default({
                 window.notyf.error(err.response.data.message);
             })
         },
+        async login({commit, dispatch}, credentials){
+            commit('SET_FORM_ERRORS', {}, {root: true})
+            commit('SET_BUTTON_LOADING', true, {root: true})
+            await axios.post('login', credentials).then(res => {
+                commit('SET_BUTTON_LOADING', false, {root: true})  
+                window.notyf.success(res.data.message)
+                dispatch('attempt', res.data.token)
+                router.push('/')
+            }).catch(err => {
+                if(err.response.data.errors){
+                    commit('SET_FORM_ERRORS', err.response.data.errors, {root: true})
+                }
+                commit('SET_BUTTON_LOADING', false, {root: true})
+                window.notyf.error(err.response.data.message);
+            })
+        },
         async attempt({commit, state}, token){
             if(token){
                 commit('SET_TOKEN', token)
@@ -55,15 +70,63 @@ export default({
                 commit('SET_TOKEN', null)
             })
         },
-        async logout({commit}){
-            await axios.get('logout').then(res => {
-                commit('SET_TOKEN', null)
-                commit('SET_USER', [])
+        async updateProfile({commit, dispatch}, credentials){
+            commit('SET_FORM_ERRORS', {}, {root: true})
+            commit('SET_BUTTON_LOADING', true, {root: true})
+
+            let data = await axios.put('profile/update', credentials).then(res => {
+                commit('SET_BUTTON_LOADING', false, {root: true})
+                setTimeout(function () {
+                    dispatch('getProfile')
+                }, 1000);
                 window.notyf.success(res.data.message)
-                router.push('/')
+                return res.data
             }).catch(err => {
+                if(err.response.data.errors){
+                    commit('SET_FORM_ERRORS', err.response.data.errors, {root: true})
+                }
+                commit('SET_BUTTON_LOADING', false, {root: true})
+                window.notyf.error(err.response.data.message)
+                return err.response
+            })
+            return data
+        },
+        async updateAvatar({commit, dispatch}, avatar){
+            commit('SET_BUTTON_LOADING', true, {root: true})
+
+            let data = await axios.put('profile/updateAvatar', avatar).then(res => {
+                commit('SET_BUTTON_LOADING', false, {root: true})
+                setTimeout(function () {
+                    dispatch('getProfile')
+                }, 1000);
+                window.notyf.success(res.data.message)
+                return res
+            }).catch(err => {
+                commit('SET_BUTTON_LOADING', false, {root: true})
+                window.notyf.error(err.response.data.message)
+                return err.response
+            })
+            return data
+        },
+        async changePassword({commit},credentials){
+            commit('SET_FORM_ERRORS', {}, {root: true})
+            commit('SET_BUTTON_LOADING', true, {root: true})
+            await axios.post('password/change', credentials).then(res => {
+                commit('SET_BUTTON_LOADING', false, {root: true})
+                window.notyf.success(res.data.message)
+            }).catch(err => {
+                if(err.response.data.errors){
+                    commit('SET_FORM_ERRORS', err.response.data.errors, {root: true})
+                }
+                commit('SET_BUTTON_LOADING', false, {root: true})
                 window.notyf.error(err.response.data.message)
             })
+        },
+        async logout({commit}){
+            commit('SET_TOKEN', null)
+            commit('SET_USER', [])
+            window.notyf.success("Berhasil Logout")
+            router.push('/')
         }
     }
 })

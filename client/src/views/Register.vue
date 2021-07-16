@@ -22,8 +22,10 @@
                             <small class="p-error" v-if="formErrors.nama">*{{formErrors.nama[0]}}</small>
                         </div>
                         <div class="col">
-                            <span class="p-field p-float-label">
-                                <InputNumber :class="{'p-invalid': formErrors.phone && formErrors.phone.length > 0}" v-model="form.phone" mode="decimal" :useGrouping="false" id="phone" class="w-100" placeholder="Number Phone" />
+                            <span class="p-float-label p-input-icon-left">
+                                <i class="pi pi-phone" />
+                                <InputText type="number" :class="{'p-invalid': formErrors.phone && formErrors.phone.length > 0}" class="w-100" id="phone" v-model="form.phone" min="0" />
+                                <label for="phone">Number Phone</label>
                             </span>
                             <small class="p-error" v-if="formErrors.phone">*{{formErrors.phone[0]}}</small>
                         </div>
@@ -88,11 +90,9 @@
 <script>
 import vueRecaptcha from "vue3-recaptcha2"
 import Button from 'primevue/button'
-import InputNumber from 'primevue/inputnumber'
 import InputText from 'primevue/inputtext'
 import Textarea from 'primevue/textarea'
 import { mapGetters } from "vuex"
-// import passingThree from "@/components/loadings/passingThree"
 
 export default {
     data(){
@@ -131,10 +131,8 @@ export default {
     components:{
         vueRecaptcha,
         InputText,
-        InputNumber,
         Textarea,
         Button,
-        // passingThree,
     }
 }
 </script>

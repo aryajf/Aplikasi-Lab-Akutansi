@@ -4,9 +4,11 @@ var router = express.Router()
 // CALL CONTROLLER
 const auth = require('../controllers/auth')
 const user = require('../controllers/user')
+const article = require('../controllers/article')
 
 // CALL MIDDLEWARE
 const checkAuth = require('../middleware/checkAuth')
+const isAdmin = require('../middleware/isAdmin')
 const fileUpload = require('../middleware/fileUpload')
 
 router.get('/', function(req, res, next) {
@@ -22,5 +24,28 @@ router.put('/verify/:email/:token', auth.verifyEmail)
 router.post('/password/forgot', auth.forgotPasswordRequest)
 router.put('/password/update/:email/:token', auth.updatePassword)
 router.post('/password/change', checkAuth, auth.changePassword)
+
+// ADMIN
+router.route('/user')
+  .get(checkAuth, isAdmin, user.getUsers)
+router.route('/user/search/:keyword')
+  .get(checkAuth, isAdmin, user.searchUsers)
+router.route('/user/:id')
+  .get(checkAuth, isAdmin, user.showUsers)
+  .delete(checkAuth, isAdmin, user.deleteUser)
+
+// ARTICLE
+router.route('/article')
+  .get(article.index)
+  .post(checkAuth, isAdmin, fileUpload.fields([{name: 'cover'}]), article.store)
+
+// SEARCH article
+router.route('/article/search/:keyword')
+  .get(article.search)
+
+router.route('/article/:slug')
+  .get(article.show)
+  .put(checkAuth, isAdmin, fileUpload.fields([{name: 'cover'}]), article.update)
+  .delete(checkAuth, isAdmin, article.delete)
   
 module.exports = router

@@ -2,6 +2,11 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
   {
+    path: '/:pathMatch(.*)*',
+    name: 'not-found',
+    component: () => import(/* webpackChunkName: "404" */ '@/components/errors/404.vue'),
+  },
+  {
     path: '/',
     name: 'Home',
     component: () => import(/* webpackChunkName: "home" */ '../views/Home.vue')

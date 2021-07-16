@@ -1,0 +1,45 @@
+#profile{
+    background-image: linear-gradient(to right, #FFB6C1, #add8e6);
+    .card{
+        width: 90%;
+
+        .avatar {
+            margin: 20px 0;
+            position: relative;
+
+            button {
+                position: absolute;
+                background: white;
+                font-size: 20px;
+                right: 50px;
+                color: grey;
+            }
+
+            img {
+                width: 50%;
+                margin-left: 25%;
+                background: white;
+            }
+        }
+    }
+    #login-img-1{
+        position:absolute;
+        display: none;
+        bottom: 0;
+        right: 10rem;
+    }
+    #login-img-2{
+        position:absolute;
+        display: none;
+        top: 2rem;
+        left: 5rem;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+    #login{
+        #login-img-1, #login-img-2{
+            display: block;
+        }
+    }
+}

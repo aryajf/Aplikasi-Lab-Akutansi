@@ -55,7 +55,7 @@ export default({
                 window.notyf.error(err.response.data.message);
             })
         },
-        async attempt({commit, state}, token){
+        async attempt({commit, state, dispatch}, token){
             if(token){
                 commit('SET_TOKEN', token)
             }
@@ -63,6 +63,9 @@ export default({
                 return
             }
 
+            dispatch('getProfile')
+        },
+        async getProfile({commit}){
             await axios.get('profile').then(res => {
                 commit('SET_USER', res.data.data)
             }).catch(() => {

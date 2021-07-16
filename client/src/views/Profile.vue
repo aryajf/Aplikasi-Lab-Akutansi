@@ -1,0 +1,114 @@
+<template>
+    <div>
+        <!-- UPLOAD IMAGE MODAL -->
+        <imageCropper />
+        <div id="profile" class="container-fluid">
+            <div style="height:100vh;" class="row align-middle align-items-center d-flex justify-content-center">
+                <div class="card" data-aos="fade-down" data-aos-offset="-500" data-aos-duration="1500">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <div v-if="user.avatar" class="avatar">
+                                    <button class="btn rounded-circle shadow" data-bs-toggle="modal" data-bs-target="#avatarModal"><i class="uil uil-pen"></i></button>
+                                    <img class="rounded-circle shadow-sm" :src="apiURL+'images/avatar/'+user.avatar" alt="avatar">
+                                </div>
+                                <div v-else class="avatar">
+                                    <button class="btn rounded-circle shadow" data-bs-toggle="modal" data-bs-target="#avatarModal"><i class="uil uil-pen"></i></button>
+                                    <img class="rounded-circle shadow-sm" src="@/assets/images/no-avatar.png" alt="avatar">
+                                </div>
+                                <p class="text-center fw-bold">{{user.nama}}</p>
+                            </div>
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col">
+                                        <router-link to="/">
+                                            <Button label="Back to home" class="p-button-text" icon="pi pi-arrow-left" iconPos="left" />
+                                            </router-link>
+                                    </div>
+                                    <div class="col">
+                                        <h5 class="card-title text-end">Login</h5>
+                                    </div>
+                                </div>
+                                <hr>
+                                <form @submit.prevent="updateProfile">
+                                <div class="row my-4">
+                                    <div class="col">
+                                        <span class="p-field p-float-label p-input-icon-left w-100">
+                                            <i class="pi pi-user"></i>
+                                            <InputText :class="{'p-invalid': formErrors.nama && formErrors.nama.length > 0}" class="w-100" id="nama" type="nama" v-model="user.nama" />
+                                            <label for="nama">Nama</label>
+                                        </span>
+                                    </div>
+                                    <small class="p-error" v-if="formErrors.nama">*{{formErrors.nama[0]}}</small>
+                                    <div class="col">
+                                        <span class="p-field p-float-label p-input-icon-left w-100">
+                                            <i class="pi pi-phone"></i>
+                                            <InputText :class="{'p-invalid': formErrors.phone && formErrors.phone.length > 0}" id="phone" class="w-100" type="phone" v-model="user.phone" />
+                                            <label for="phone">Number phone</label>
+                                        </span>
+                                        <small class="p-error" v-if="formErrors.phone">*{{formErrors.phone[0]}}</small>
+                                    </div>
+                                </div>
+                                <div class="row my-4">
+                                    <div class="col">
+                                        <span class="p-field p-float-label p-input-icon-left w-100">
+                                            <i class="pi pi-map-marker"></i>        
+                                            <Textarea :class="{'p-invalid': formErrors.alamat && formErrors.alamat.length > 0}" id="alamat" v-model="user.alamat" :autoResize="true" rows="2" cols="30" class="w-100" />
+                                            <label for="alamat">Alamat</label>
+                                        </span>
+                                        <small class="p-error" v-if="formErrors.alamat">*{{formErrors.alamat[0]}}</small>
+                                    </div>
+                                </div>
+                                <div class="row my-4">
+                                    <div class="col">
+                                        <Button class="p-button-success" type="submit" label="Submit" iconPos="right" :disabled="btnLoading" :icon="btnLoading ? 'pi pi-spin pi-spinner' : 'pi pi-check'" />
+                                    </div>
+                                </div>
+                                </form>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+import Button from 'primevue/button'
+import InputText from 'primevue/inputtext'
+import Textarea from 'primevue/textarea'
+import imageCropper from "@/components/imageCropper.vue";
+import { mapGetters } from "vuex"
+
+export default {
+    data(){
+        return {
+            form:{
+            }
+        }
+    },
+    computed: {
+        ...mapGetters({
+            btnLoading: "btnLoading",
+            formErrors: "formErrors",
+            user: "auth/user",
+        }),
+    },
+    methods: {
+        updateProfile: function(){
+            this.$store.dispatch('auth/updateProfile', this.user)
+        },
+    },
+    components:{
+        InputText,
+        Button,
+        Textarea,
+        imageCropper
+    }
+}
+</script>
+<style lang="scss">
+    @import "@/assets/sass/app.scss";
+    @import "@/assets/sass/profile.scss";
+</style>

@@ -23,6 +23,7 @@
     "sass": "^1.33.0",
     "v-pagination-3": "^0.1.5",
     "vue": "^3.0.0",
+    "vue-cropperjs": "^5.0.0",
     "vue-router": "^4.0.0-0",
     "vue3-recaptcha2": "^1.2.0",
     "vuex": "^4.0.0-0"

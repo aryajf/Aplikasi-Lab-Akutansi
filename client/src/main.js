@@ -10,11 +10,16 @@ import PrimeVue from 'primevue/config'
 import "primevue/resources/themes/saga-blue/theme.css"
 import "primevue/resources/primevue.min.css"
 import "primeicons/primeicons.css"
+import Button from 'primevue/button'
+import Dialog from 'primevue/dialog'
 
 // Bootstrap
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap"
 import "@popperjs/core"
+
+// Vue Cropper
+import 'cropperjs/dist/cropper.css';
 
 // Axios
 import axios from 'axios'
@@ -31,5 +36,5 @@ import VueCountdown from '@chenfengyuan/vue-countdown'
 require('@/store/subscriber')
 
 store.dispatch('auth/attempt', localStorage.getItem('token')).then(() => {
-    createApp(App).use(store).use(router).use(PrimeVue).component('pagination', Pagination).component(VueCountdown.name, VueCountdown).mount('#app')
+    createApp(App).use(store).use(router).use(PrimeVue).component('Dialog',Dialog).component('Button',Button).component('pagination', Pagination).component(VueCountdown.name, VueCountdown).mount('#app')
 })

@@ -14,17 +14,26 @@ body{
     font-family: "Poppins", sans-serif;
 }
 
-::-moz-scrollbar {
-    width: 5px;
-}
-
-::-moz-scrollbar-track {
-    background: #fff;
-}
-
-::-moz-scrollbar-thumb {
-    background: #3c4652;
-}
+/* Works on Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #333 #eee;
+  }
+  
+  /* Works on Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+  *::-webkit-scrollbar-track {
+    background: #eee;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    background-color: #333;
+    border-radius: 20px;
+    border: 3px solid #eee;
+  }
 
 // BAHAN
 .break {

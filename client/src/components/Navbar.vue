@@ -10,7 +10,7 @@
         </template>
     </Dialog>
     <div class="position-relative">
-        <nav :class="bg" class="navbar navbar-expand-lg navbar-dark position-absolute top-0 start-0 w-100">
+        <nav :class="[bg, theme]" class="navbar navbar-expand-lg position-absolute top-0 start-0 w-100">
             <div class="container-fluid">
                 <router-link to="/" class="navbar-brand" href="#">Labamen</router-link>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,7 +56,7 @@ export default {
         }
         return {displayConfirmation, openConfirmation, closeConfirmation, logout}
     },
-    props:['bg'],
+    props:['bg', 'theme'],
     computed: {
         ...mapGetters({
             user: 'auth/user',

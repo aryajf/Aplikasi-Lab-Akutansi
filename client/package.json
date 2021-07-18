@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@chenfengyuan/vue-carousel": "^2.0.0-beta",
     "@chenfengyuan/vue-countdown": "^2.0.0-beta",
     "@popperjs/core": "^2.9.2",
     "aos": "^2.3.4",

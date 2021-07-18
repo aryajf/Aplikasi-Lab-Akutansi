@@ -1,6 +1,6 @@
 <template>
   <div>
-    <navbar bg="bg-navbar"/>
+    <navbar bg="bg-navbar" theme="navbar-dark"/>
     <div class="homepage py-5">
       <div class="container">
         <div class="row homepage-header">

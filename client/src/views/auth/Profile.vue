@@ -86,15 +86,21 @@
 </template>
 
 <script>
+import appConfig from "@/config/app"
 import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import Textarea from 'primevue/textarea'
-import imageCropper from "@/components/imageCropper.vue";
+import imageCropper from "@/components/imageCropper.vue"
 import { mapGetters } from "vuex"
 import Mixins from "@/mixins"
 
 export default {
     mixins: [Mixins],
+    setup() {
+        return {
+            apiURL: appConfig.apiURL,
+        };
+    },
     data(){
         return {
             form:{

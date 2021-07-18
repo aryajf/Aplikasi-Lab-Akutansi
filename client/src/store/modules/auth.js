@@ -101,7 +101,7 @@ export default({
                 commit('SET_BUTTON_LOADING', false, {root: true})
                 setTimeout(function () {
                     dispatch('getProfile')
-                }, 1000);
+                }, 1000)
                 window.notyf.success(res.data.message)
                 return res
             }).catch(err => {

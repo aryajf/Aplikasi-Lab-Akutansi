@@ -38,9 +38,9 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import appConfig from "@/config/app";
-import VueCropper from "vue-cropperjs";
+import { mapGetters } from "vuex"
+import appConfig from "@/config/app"
+import VueCropper from "vue-cropperjs"
 export default {
     data() {
         return {

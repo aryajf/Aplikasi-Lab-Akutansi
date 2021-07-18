@@ -322,7 +322,6 @@ module.exports = {
         let userReq = {
             nama: req.body.nama,
             phone: req.body.phone,
-            avatar: user.avatar,
             alamat: req.body.alamat,
         }
 
@@ -334,20 +333,9 @@ module.exports = {
             userReq.alamat = ''
         }
         
-        if(req.file){
-            if(userValidation(userReq, req.url) != null){
-                res.status(400).send(userValidation(userReq, req.url))
-                deleteFile(req.file.path)
-                return
-            }
-            userReq.avatar = req.file.filename
-            compressImage('public/uploads/'+req.file.filename, avatarPath, req.file.path)
-            deleteFile(avatarPath + user.avatar)
-        }else{
-            if(userValidation(userReq, req.url) != null){
-                res.status(400).send(userValidation(userReq, req.url))
-                return
-            }
+        if(userValidation(userReq, req.url) != null){
+            res.status(400).send(userValidation(userReq, req.url))
+            return
         }
 
         try{
@@ -356,7 +344,6 @@ module.exports = {
                     data: {
                         email: data.email,
                         nama: data.nama,
-                        avatar: data.avatar
                     },
                     message: 'User berhasil diedit',
                     request: {
@@ -372,6 +359,34 @@ module.exports = {
                 message: 'Terjadi kesalahan saat mengedit profile',
                 status: false
             })
+        }
+    },
+    updateAvatar: async (req, res) => {
+        let user = await findUser(req.decoded.email)
+        let userReq = {
+            avatar: req.file.filename,
+        }
+        compressImage('public/uploads/'+req.file.filename, avatarPath, req.file.path)
+        deleteFile(avatarPath + user.avatar)
+
+        try{
+            user.update(userReq).then(() => {
+                res.status(200).json({
+                    message: 'Avatar berhasil diubah',
+                    request: {
+                        method: req.method,
+                        url: process.env.BASE_URL + 'user/' + req.decoded.email
+                    },
+                    status: true,
+                })
+            })
+        }catch(err){
+            res.status(400).json({
+                error: err.message,
+                message: 'Terjadi kesalahan saat mengubah avatar',
+                status: false
+            })
+            deleteFile(req.file.path)
         }
     },
 }

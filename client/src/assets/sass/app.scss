@@ -1,5 +1,6 @@
 /* Google Font CDN Link */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
 
 body{
     overflow-x: hidden
@@ -8,6 +9,8 @@ body{
 * {
     margin: 0;
     padding: 0;
+}
+.container{
     font-family: "Poppins", sans-serif;
 }
 
@@ -38,6 +41,13 @@ body{
 
 .bg-navbar {
     background-image: linear-gradient(to right, #1C96BF, #2038B5) !important;
+}
+
+.bg-retro {
+    // alizarin
+    background: #fff !important;
+    color: #323B46 !important;
+    border: 0;
 }
 
 .bg-az {

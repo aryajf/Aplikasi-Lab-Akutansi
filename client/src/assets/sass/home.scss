@@ -38,6 +38,88 @@
         right: 0;
     }
 }
+.teampage{
+    background-image: #a4d;
+    position: relative;
+    overflow: hidden;
+    padding:250px 0;
+    font-family: 'Permanent Marker', cursive;
+    Button{
+        font-family: 'Permanent Marker', cursive;
+    }
+    h1{
+        color: #333;
+    }
+    h3{
+        color: #333;
+    }
+    .teampage-header{
+        font-family: 'Permanent Marker', cursive;
+        h1{
+            font-size: 4rem;
+        }
+        h3{
+            font-size: 2rem;
+        }
+    }
+
+    #teampage-arrow-up-left{
+        position:absolute;
+        top: 10%;
+        right: 0;
+        width: 10rem;
+    }
+    #teampage-arrow-bottom-right{
+        position:absolute;
+        bottom: 20%;
+        left: 0;
+        width: 10rem;
+    }
+    #teampage-laptop-left{
+        position:absolute;
+        top: 0;
+        left:5%;
+        .container-fluid{
+            position: relative;
+            img{
+                width: 20rem;
+            }
+            h5{
+                z-index: 2;
+                position: absolute;
+                color: #fff;
+                top: 35%;
+                left: 55%;
+                transform: translate(-50%, -50%)
+            }
+        }
+    }
+    #teampage-laptop-right{
+        position:absolute;
+        bottom: 0;
+        right:5%;
+        .container-fluid{
+            position: relative;
+            img{
+                width: 18rem;
+            }
+            h6{
+                z-index: 2;
+                position: absolute;
+                color: #fff;
+                top: 35%;
+                left: 50%;
+                transform: translate(-50%, -50%)
+            }
+        }
+    }
+    #teampage-person{
+        position:absolute;
+        bottom: 0;
+        left:5%;
+        width: 20rem;
+    }
+}
 .aboutpage{
     background-image: #fff;
     position: relative;
@@ -57,25 +139,14 @@
     h3{
         color: #333;
     }
-    .homepage-header{
+    .aboutpage-header{
         margin: 120px 0;
     }
 
-    #homepage-bottom-wave, #homepage-bottom-2{
+    #aboutpage-bottom-wave{
         position:absolute;
         bottom: -20px;
         left:0;
-        right: 0;
-    }
-    #homepage-bottom-1{
-        position:absolute;
-        bottom: 0;
-        left:0;
-        right: 0;
-    }
-    #homepage-bottom-3{
-        position:absolute;
-        bottom: 0;
         right: 0;
     }
 }
@@ -127,6 +198,14 @@
     .homepage{
         #homepage-1{
             width: 30rem;
+        }
+    }
+    .teampage{
+        #teampage-arrow-up-left{
+            left: 35%;
+        }
+        #teampage-arrow-bottom-right{
+            left: 55%;
         }
     }
     .contact{

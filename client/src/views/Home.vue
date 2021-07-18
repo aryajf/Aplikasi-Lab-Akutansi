@@ -15,9 +15,43 @@
       </div>
       <svg id="homepage-bottom-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#fff" fill-opacity="1" d="M0,160L14.1,176C28.2,192,56,224,85,202.7C112.9,181,141,107,169,85.3C197.6,64,226,96,254,96C282.4,96,311,64,339,58.7C367.1,53,395,75,424,69.3C451.8,64,480,32,508,26.7C536.5,21,565,43,593,48C621.2,53,649,43,678,53.3C705.9,64,734,96,762,96C790.6,96,819,64,847,85.3C875.3,107,904,181,932,186.7C960,192,988,128,1016,117.3C1044.7,107,1073,149,1101,176C1129.4,203,1158,213,1186,224C1214.1,235,1242,245,1271,256C1298.8,267,1327,277,1355,256C1383.5,235,1412,181,1426,154.7L1440,128L1440,320L1425.9,320C1411.8,320,1384,320,1355,320C1327.1,320,1299,320,1271,320C1242.4,320,1214,320,1186,320C1157.6,320,1129,320,1101,320C1072.9,320,1045,320,1016,320C988.2,320,960,320,932,320C903.5,320,875,320,847,320C818.8,320,791,320,762,320C734.1,320,706,320,678,320C649.4,320,621,320,593,320C564.7,320,536,320,508,320C480,320,452,320,424,320C395.3,320,367,320,339,320C310.6,320,282,320,254,320C225.9,320,198,320,169,320C141.2,320,113,320,85,320C56.5,320,28,320,14,320L0,320Z"></path></svg>
     </div>
+    <div id="teampage" class="d-flex align-items-center teampage">
+      <div class="container">
+        <div class="row teampage-header">
+          <div class="col text-end" style="overflow:hidden" data-aos="fade-left" data-aos-duration="500">
+            <h3>Staff | <VueJsCounter style="display:inline;" start="0" end="4" duration="5000"/></h3>
+            <h3>Asisten | <VueJsCounter style="display:inline;" start="0" end="63" duration="5000"/></h3>
+            <h3>Team IT | <VueJsCounter style="display:inline;" start="0" end="7" duration="5000"/></h3>
+          </div>
+          <div class="col align-self-center" style="overflow:hidden">
+            <h1 data-aos="fade-right" data-aos-duration="500">Our Teams</h1>
+          </div>
+        </div>
+      </div>
+      <div data-aos="fade-right" data-aos-offset="350" data-aos-duration="500" id="teampage-laptop-left">
+        <div class="container-fluid">
+        <h5>
+          <div class="pb-2">Pendaftaran</div>
+          <a href="https://oprecruitment.ak-menengah.com/" target="_blank"><Button class="bg-retro" icon="pi pi-search" iconPos="right" label="Daftar disini" /></a>
+        </h5>
+        <img src="@/assets/images/laptop-left.png" alt="">
+        </div>
+      </div>
+      <div data-aos="fade-right" data-aos-offset="-50" data-aos-duration="500" id="teampage-laptop-right">
+        <div class="container-fluid">
+        <h6>
+          <div class="pb-2">Info Selengkapnya</div>
+          <a href="https://ak-menengah.com/" target="_blank"><Button class="bg-retro" icon="pi pi-search" iconPos="right" label="Klik Disini" /></a>
+        </h6>
+        <img src="@/assets/images/laptop-right.png" alt="">
+        </div>
+      </div>
+      <img id="teampage-arrow-up-left" data-aos="fade-up" data-aos-offset="350" data-aos-duration="500" src="@/assets/images/arrow-up-left.png" style="z-index:-1;" alt="">
+      <img id="teampage-arrow-bottom-right" data-aos="fade-down" data-aos-offset="50" data-aos-duration="500" src="@/assets/images/arrow-bottom-right.png" style="z-index:-1;" alt="">
+    </div>
     <div id="aboutpage" class="aboutpage pb-5">
       <div class="container">
-        <div class="row homepage-header">
+        <div class="row aboutpage-header">
           <h1 data-aos="zoom-in" data-aos-duration="1000" class="d-flex align-items-center justify-content-center">Our News & Article</h1>
           <h3 data-aos="zoom-in-up" data-aos-duration="1500" class="d-flex align-items-center justify-content-center">Disini kami menyajikan info & artikel terbaru kami</h3>
         </div>
@@ -91,7 +125,7 @@
           </div>
         </div>
       </div>
-      <svg id="homepage-bottom-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+      <svg id="aboutpage-bottom-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
       <linearGradient x1="0" y1="100%" x2="100%" y2="100%" id="gradient">
         <stop stop-color="#1C96BF" offset="0%"/>
         <stop stop-color="#2038B5" offset="100%"/>

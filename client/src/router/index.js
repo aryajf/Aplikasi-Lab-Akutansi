@@ -60,12 +60,20 @@ const routes = [
     component: () => import(/* webpackChunkName: "article" */ '../views/article/Index.vue')
   },
   {
-    path: '/article/add',
-    name: 'Add Article',
+    path: '/article/create',
+    name: 'Create Article',
     // route level code-splitting
     // this generates a separate chunk (article.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "article" */ '../views/article/Add.vue')
+    component: () => import(/* webpackChunkName: "article" */ '../views/article/Create.vue')
+  },
+  {
+    path: '/article/update/:slug',
+    name: 'Update Article',
+    // route level code-splitting
+    // this generates a separate chunk (article.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "article" */ '../views/article/Update.vue')
   },
   {
     path: '/article/:slug',

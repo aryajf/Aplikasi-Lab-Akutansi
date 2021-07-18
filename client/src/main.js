@@ -19,7 +19,10 @@ import "bootstrap"
 import "@popperjs/core"
 
 // Vue Cropper
-import 'cropperjs/dist/cropper.css';
+import 'cropperjs/dist/cropper.css'
+
+// Vue Counter
+import VueJsCounter from 'vue-js-counter'
 
 // Axios
 import axios from 'axios'
@@ -36,5 +39,5 @@ import VueCountdown from '@chenfengyuan/vue-countdown'
 require('@/store/subscriber')
 
 store.dispatch('auth/attempt', localStorage.getItem('token')).then(() => {
-    createApp(App).use(store).use(router).use(PrimeVue).component('Dialog',Dialog).component('Button',Button).component('pagination', Pagination).component(VueCountdown.name, VueCountdown).mount('#app')
+    createApp(App).use(store).use(router).use(PrimeVue).component('Dialog',Dialog).component('Button',Button).component('pagination', Pagination).component('VueJsCounter',VueJsCounter).component(VueCountdown.name, VueCountdown).mount('#app')
 })

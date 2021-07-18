@@ -21,9 +21,6 @@
                         <router-link to="/" class="nav-link" exact><i class="pi pi-home me-1"></i>Home</router-link>
                         <router-link to="/article" class="nav-link" exact><i class="pi pi-microsoft me-1"></i>Article</router-link>
                         <template v-if="authenticated">
-                            <template v-if="user.role == 'Admin'">
-                                <router-link to="/article/add" class="nav-link" exact><i class="pi pi-upload me-1"></i>Add Article</router-link>
-                            </template>
                             <router-link to="/profile" class="nav-link" exact><i class="pi pi-user me-1"></i>Profile</router-link>
                             <a href="#" @click="openConfirmation" class="nav-link" exact><i class="pi pi-sign-out me-1"></i>Logout</a>
                         </template>

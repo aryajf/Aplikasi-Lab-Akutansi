@@ -55,7 +55,9 @@
         <div class="row pt-4 pb-3">
             <div class="col">
                 <span class="p-float-label p-input-icon-right">
+                    <router-link to="/article/create">
                     <Button label="Tambah Artikel" icon="pi pi-plus" iconPos="left" />
+                    </router-link>
                 </span>
             </div>
             <div class="col d-flex justify-content-end">
@@ -102,5 +104,5 @@ export default {
 </script>
 <style lang="scss">
 @import "@/assets/sass/app.scss";
-@import "@/assets/sass/article/Index.scss";
+@import "@/assets/sass/article/index.scss";
 </style>

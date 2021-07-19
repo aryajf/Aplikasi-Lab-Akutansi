@@ -73,6 +73,18 @@ export default({
                 commit('SET_TOKEN', null)
             })
         },
+        async verifyEmail({commit}, data){
+            commit('SET_BUTTON_LOADING', true, {root: true})
+
+            await axios.get(`verify/${data.email}/${data.token}`).then(res => {
+                commit('SET_BUTTON_LOADING', false, {root: true})
+                window.notyf.success(res.data.message)
+                router.push('/login')
+            }).catch(err => {
+                commit('SET_BUTTON_LOADING', false, {root: true})
+                window.notyf.error(err.response.data.message)
+            })
+        },
         async updateProfile({commit, dispatch}, credentials){
             commit('SET_FORM_ERRORS', {}, {root: true})
             commit('SET_BUTTON_LOADING', true, {root: true})

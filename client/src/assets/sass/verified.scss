@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+#verified{
+    font-family: 'Bebas Neue', cursive;
+    background-image: linear-gradient(to right, #1C96BF, #2038B5);
+    div{
+        font-family: 'Bebas Neue', cursive;
+    }
+    .card{
+        width:100vw;
+        .row{
+
+        }
+    }
+}
+
+@media screen and (min-width: 768px) {
+    #verified{
+        .card{
+            width:50vw;
+        }
+    }
+}

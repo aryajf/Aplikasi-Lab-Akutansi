@@ -1,5 +1,5 @@
 <template>
-    <div id="article">
+    <div id="article" v-if="articles.article">
         <navbar bg="" theme="navbar-light"/>
         <div id="aboutpage" class="aboutpage pb-5">
         <svg id="wave-up" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
@@ -15,30 +15,16 @@
           <h3 data-aos="zoom-in-up" data-aos-duration="1500" class="d-flex align-items-center justify-content-center">Disini kami menyajikan info & artikel terbaru kami</h3>
         </div>
         <div class="container">
-          <div class="row">
+          <div class="row" v-if="articles.article.length != 0">
             <div class="col-12">
                 <div id="carouselExampleDark" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
                     <div class="carousel-inner">
-                        <div class="carousel-item active" data-bs-interval="10000">
-                        <img src="@/assets/images/tes1.jpg" class="d-block w-100" alt="">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h4>First slide label</h4>
-                            <p>Some representative placeholder content for the first slide.</p>
-                        </div>
-                        </div>
-                        <div class="carousel-item" data-bs-interval="2000">
-                        <img src="@/assets/images/tes2.jpg" class="d-block w-100" alt="">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h4>Second slide label</h4>
-                            <p>Some representative placeholder content for the second slide.</p>
-                        </div>
-                        </div>
-                        <div class="carousel-item">
-                        <img src="@/assets/images/tes3.jpg" class="d-block w-100" alt="">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h4>Third slide label</h4>
-                            <p>Some representative placeholder content for the third slide.</p>
-                        </div>
+                        <div v-for="item in articles.article" :key="item.id" class="carousel-item active" data-bs-interval="10000">
+                          <img src="@/assets/images/tes1.jpg" class="d-block w-100" alt="">
+                          <div class="carousel-caption d-none d-md-block">
+                              <h4>{{item.title}}</h4>
+                              <p>{{item.short_desc}}</p>
+                          </div>
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
@@ -53,7 +39,7 @@
             </div>
         </div>
         <div class="row pt-4 pb-3">
-            <div class="col">
+            <div v-if="authenticated" class="col">
                 <span class="p-float-label p-input-icon-right">
                     <router-link to="/article/create">
                     <Button label="Tambah Artikel" icon="pi pi-plus" iconPos="left" />
@@ -68,17 +54,21 @@
                 </span>
             </div>
         </div>
-          <div class="row">
-            <div class="col">
+          <div class="row" v-if="articles.article.length != 0">
+            <div class="col" v-for="item in articles.article" :key="item.id">
               <div class="card mb-3" style="width: 20rem;">
-                <img src="" class="card-img-top" alt="...">
+                <img :src="apiURL+'images/article/'+item.cover" class="card-img-top" :alt="item.title">
                 <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <ScrollTop />
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <router-link to="/article/a"><Button label="Read" icon="pi pi-check" /></router-link>
+                  <h5 class="card-title">{{item.title}}</h5>
+                  <p class="card-text">{{item.short_desc}}</p>
+                  <router-link :to="'/article/'+item.slug"><Button label="Read" icon="pi pi-check" /></router-link>
                 </div>
               </div>
+            </div>
+          </div>
+          <div class="row" v-else>
+            <div class="col">
+              <div class="alert alert-info">Artikel belum ditambahkan</div>
             </div>
           </div>
         </div>
@@ -93,12 +83,28 @@
     </div>
 </template>
 <script>
+import appConfig from "@/config/app"
 import InputText from 'primevue/inputtext'
 import Navbar from "@/components/Navbar.vue"
+import { mapGetters } from "vuex"
 export default {
+    setup() {
+      return {
+        apiURL: appConfig.apiURL,
+      }
+    },
     components:{
       Navbar,
       InputText,
+    },
+    computed: {
+      ...mapGetters({
+        articles: "article/articles",
+        authenticated: "auth/authenticated",
+      }),
+    },
+    created(){
+      this.$store.dispatch('article/index')
     }
 }
 </script>

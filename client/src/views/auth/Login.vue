@@ -42,6 +42,11 @@
                             <Button class="p-button-success" type="submit" label="Submit" iconPos="right" :disabled="btnLoading" :icon="btnLoading ? 'pi pi-spin pi-spinner' : 'pi pi-check'" />
                         </div>
                     </div>
+                    <div class="row my-4">
+                        <div class="col">
+                            <router-link style="text-decoration:none;" to="/register">Belum pernah login? buat akun disini</router-link>
+                        </div>
+                    </div>
                     </form>
                 </div>
             </div>

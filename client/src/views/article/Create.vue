@@ -115,13 +115,8 @@
                     </div>
                 </div>
                 <div class="row mb-4">
-                    <div class="col">
-                        <!-- <span class="p-field p-float-label p-input-icon-right w-100">
-                            <i class="pi pi-pencil"></i>
-                            <Textarea id="long_desc" :class="{'p-invalid': formErrors.long_desc && formErrors.long_desc.length > 0}" v-model="form.long_desc" :autoResize="true" rows="3" cols="30" class="w-100" />
-                            <label for="long_desc">Deskripsi panjang</label>
-                        </span> -->
-                        <Editor v-model="form.long_desc" editorStyle="height: 320px">
+                    <div class="col editor-container">
+                        <Editor :class="{'p-invalid': formErrors.long_desc && formErrors.long_desc.length > 0}" v-model="form.long_desc" editorStyle="height: 320px">
                         </Editor>
                         <small class="p-error" v-if="formErrors.long_desc">*{{formErrors.long_desc[0]}}</small>
                     </div>
@@ -246,17 +241,21 @@ export default {
                 lastModified: this.form.cover.lastModified,
                 type: this.form.cover.type,
             });
-            const data = new FormData()
-            data.append("cover", cover)
-            data.append("title", this.form.title)
-            data.append("short_desc", this.form.short_desc)
-            data.append("long_desc", this.form.long_desc)
+            if(this.form.cover != ''){
+                const data = new FormData()
+                data.append("cover", cover)
+                data.append("title", this.form.title)
+                data.append("short_desc", this.form.short_desc)
+                data.append("long_desc", this.form.long_desc)
 
-            this.$store.dispatch("article/create", data).then((res) => {
-                if (res.status === 201) {
-                    this.$router.push("/article");
-                }
-            });
+                this.$store.dispatch("article/create", data).then((res) => {
+                    if (res.status === 201) {
+                        this.$router.push("/article");
+                    }
+                });
+            }else{
+                window.notyf.error('Anda belum mengupload foto')
+            }
         },
     },
     components:{

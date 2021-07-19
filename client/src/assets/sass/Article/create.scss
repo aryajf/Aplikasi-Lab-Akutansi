@@ -56,6 +56,11 @@
         margin: 120px 0;
     }
 
+    .editor-container .p-invalid{
+        border: 1px solid red;
+        border-radius: 4px;
+    }
+
     #aboutpage-bottom-wave{
         position:absolute;
         bottom: -20px;

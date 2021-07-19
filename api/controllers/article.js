@@ -4,12 +4,12 @@ const path = require('path')
 const articleCoverPath = path.join(__dirname, '../public/images/article/')
 const Validator = require('validatorjs');
 const validatorMessage = require('../config/validatorMessage')
-const {compressImage, moveFile, deleteFile, makeDirectory, createSlug, getPagination, getPagingData, fs} = require('../config/mixins')
+const {compressImage, deleteFile, makeDirectory, createSlug, getPagination, getPagingData} = require('../config/mixins')
 
 module.exports = {
     index: async(req, res) => {
-        let { page, size } = req.query
-        const { limit, offset } = getPagination(page, size, 2)
+        let { page } = req.query
+        const { limit, offset } = getPagination(page, 8)
         
         await Article.findAndCountAll({limit,offset,order:[['updatedAt', 'DESC']]}).then(data => {
             const { totalItems, dataPaginate, totalPages, currentPage } = getPagingData(data, page, limit)
@@ -38,8 +38,8 @@ module.exports = {
             res.status(404).json({message : 'Article tidak ditemukan', status: false})
         }
 
-        let { page, size } = req.query
-        const { limit, offset } = getPagination(page, size, 1)
+        let { page } = req.query
+        const { limit, offset } = getPagination(page, 8)
         
         await Article.findAndCountAll({limit,offset,order:[['updatedAt', 'DESC']],where:{
             title : {
@@ -92,14 +92,14 @@ module.exports = {
             long_desc: req.body.long_desc,
             cover: '',
         }
+        console.log(articleReq.long_desc);
 
         if(req.files.cover){
             articleReq.cover = req.files.cover[0].filename
-        }        
+        }
 
         if(articleValidation(articleReq) != null){
             res.status(400).send(articleValidation(articleReq))
-            deleteFile(req.files.cover[0].path)
             return
         }
         
@@ -127,10 +127,11 @@ module.exports = {
                 status: true,
             })
         }catch(err){
+            console.log(err.message);
             deleteFile(req.files.cover[0].path)
             res.status(400).json({
                 error: err.message,
-                message: 'Terjadi kesalahan saat menambah Article',
+                message: 'Terjadi kesalahan saat menambah article',
                 status: false
             })
         }
@@ -165,6 +166,8 @@ module.exports = {
                 deleteFile(req.files.cover[0].path)
                 return
             }
+            compressImage('public/uploads/'+req.files.cover[0].filename, articleCoverPath, req.files.cover[0].path)
+            deleteFile(articleCoverPath + article.cover)
         }
 
         try{

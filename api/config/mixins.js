@@ -50,9 +50,7 @@ function createSlug(string) {
             .replace(/-+$/, "")
 }
 
-function getPagination(page, size, perPage) {
-    page -= 1
-    const limit = size ? size : perPage
+function getPagination(page, limit) {
     const offset = page ? page * limit : 0
 
     return { limit, offset }
@@ -60,7 +58,7 @@ function getPagination(page, size, perPage) {
 
 function getPagingData(data, page, limit) {
     const { count: totalItems, rows: dataPaginate } = data
-    const currentPage = page ? +page : 1
+    const currentPage = page ? +page : 0
     const totalPages = Math.ceil(totalItems / limit)
     
     return { totalItems, dataPaginate, totalPages, currentPage }

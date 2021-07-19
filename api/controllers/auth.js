@@ -8,7 +8,7 @@ const Validator = require('validatorjs')
 const validatorMessage = require('../config/validatorMessage')
 const path = require('path')
 const avatarPath = path.join(__dirname, '../public/images/avatar/')
-const {JWT_SECRET, JWT_SECRET_EXPIRES, BASE_URL, MAIL_FROM_ADDRESS} = process.env
+const {JWT_SECRET, JWT_SECRET_EXPIRES, BASE_URL, HOME_URL, MAIL_FROM_ADDRESS} = process.env
 const {compressImage, deleteFile} = require('../config/mixins')
 
 module.exports = {
@@ -128,13 +128,13 @@ module.exports = {
                     token: token
                 })
 
-                // let transporter = nodemailer.createTransport(emailConfig)
-                // await transporter.sendMail({
-                //     from: MAIL_FROM_ADDRESS,
-                //     to: req.body.email,
-                //     subject: "Verifikasi email - pojoklaku.com",
-                //     html: `<a href='${BASE_URL}verify/${req.body.email}/${token}' target='_blank'>klik link disini gc</a>`,
-                // })
+                let transporter = nodemailer.createTransport(emailConfig)
+                await transporter.sendMail({
+                    from: MAIL_FROM_ADDRESS,
+                    to: req.body.email,
+                    subject: "Verifikasi email - pojoklaku.com",
+                    html: `<a href='${HOME_URL}verify/${req.body.email}/${token}' target='_blank'>klik link disini gc</a>`,
+                })
 
                 if(newUser.token){
                     setTimeout(async() => {
@@ -191,6 +191,7 @@ module.exports = {
     },
     verifyEmail: async (req, res) => {
         let user = await findUser(req.params.email)
+        console.log(user);
         if(user.token != req.params.token){
             res.status(404).json({
                 message: 'Link tidak valid',

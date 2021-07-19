@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="articles.article">
     <navbar bg="bg-navbar" theme="navbar-dark"/>
     <div class="homepage py-5">
       <div class="container">
@@ -56,71 +56,21 @@
           <h3 data-aos="zoom-in-up" data-aos-duration="1500" class="d-flex align-items-center justify-content-center">Disini kami menyajikan info & artikel terbaru kami</h3>
         </div>
         <div class="container">
-          <div class="row">
-            <div class="col">
+          <div class="row" v-if="articles.article.length != 0">
+            <div class="col" v-for="item in articles.article" :key="item.id">
               <div class="card mb-3" style="width: 20rem;">
-                <img src="" class="card-img-top" alt="...">
+                <img :src="apiURL+'images/article/'+item.cover" class="card-img-top" :alt="item.title">
                 <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <ScrollTop />
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <Button label="Read" icon="pi pi-check" />
+                  <h5 class="card-title">{{item.title}}</h5>
+                  <p class="card-text">{{item.short_desc}}</p>
+                  <router-link :to="'/article/'+item.slug"><Button label="Read" icon="pi pi-check" /></router-link>
                 </div>
               </div>
             </div>
+          </div>
+          <div class="row" v-else>
             <div class="col">
-              <div class="card mb-3" style="width: 20rem;">
-                <img src="" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <ScrollTop />
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <Button label="Read" icon="pi pi-check" />
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card mb-3" style="width: 20rem;">
-                <img src="" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <ScrollTop />
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <Button label="Read" icon="pi pi-check" />
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card mb-3" style="width: 20rem;">
-                <img src="" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <ScrollTop />
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <Button label="Read" icon="pi pi-check" />
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card mb-3" style="width: 20rem;">
-                <img src="" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <ScrollTop />
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <Button label="Read" icon="pi pi-check" />
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card mb-3" style="width: 20rem;">
-                <img src="" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <Button label="Read" icon="pi pi-check" />
-                </div>
-              </div>
+              <div class="alert alert-info">Artikel belum ditambahkan</div>
             </div>
           </div>
         </div>
@@ -149,14 +99,29 @@
 </template>
 
 <script>
+import appConfig from "@/config/app"
 import Button from 'primevue/button'
 import Mixins from "@/mixins"
 import Navbar from "@/components/Navbar.vue"
+import { mapGetters } from "vuex"
 export default {
+    setup() {
+      return {
+        apiURL: appConfig.apiURL,
+      }
+    },
     mixins: [Mixins],
     components:{
       Navbar,
       Button
+    },
+    computed: {
+      ...mapGetters({
+          articles: "article/articles",
+      }),
+    },
+    created(){
+      this.$store.dispatch('article/index')
     }
 }
 </script>

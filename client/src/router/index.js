@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import store from '@/store'
 
 const routes = [
   {
@@ -38,6 +39,14 @@ const routes = [
   {
     path: '/profile',
     name: 'Profile',
+    beforeEnter: (to, from, next) => {
+      if(!store.getters['auth/authenticated']){
+        return next({
+          name : 'Home'
+        })
+      }
+      next()
+    },
     // route level code-splitting
     // this generates a separate chunk (profile.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -46,6 +55,14 @@ const routes = [
   {
     path: '/profile/password',
     name: 'Change Password',
+    beforeEnter: (to, from, next) => {
+      if(!store.getters['auth/authenticated']){
+        return next({
+          name : 'Home'
+        })
+      }
+      next()
+    },
     // route level code-splitting
     // this generates a separate chunk (profile.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -62,6 +79,14 @@ const routes = [
   {
     path: '/article/create',
     name: 'Create Article',
+    beforeEnter: (to, from, next) => {
+      if(!store.getters['auth/authenticated'] || store.getters['auth/user'].role == 'Member'){
+        return next({
+          name : 'Home'
+        })
+      }
+      next()
+    },
     // route level code-splitting
     // this generates a separate chunk (article.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -70,6 +95,14 @@ const routes = [
   {
     path: '/article/update/:slug',
     name: 'Update Article',
+    beforeEnter: (to, from, next) => {
+      if(!store.getters['auth/authenticated'] || store.getters['auth/user'].role == 'Member'){
+        return next({
+          name : 'Home'
+        })
+      }
+      next()
+    },
     // route level code-splitting
     // this generates a separate chunk (article.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -82,6 +115,14 @@ const routes = [
     // this generates a separate chunk (article.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "article" */ '../views/article/Show.vue')
+  },
+  {
+    path: '/verify/:email/:token',
+    name: 'Verify Email',
+    // route level code-splitting
+    // this generates a separate chunk (verify.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "verify" */ '../views/auth/Verified.vue')
   },
 ]
 

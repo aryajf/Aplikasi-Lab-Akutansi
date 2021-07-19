@@ -4,9 +4,13 @@
             <div class="card" data-aos="fade-down" data-aos-offset="-500" data-aos-duration="1500" style="width: 30rem;">
                 <div class="card-body">
                     <div class="row mb-3">
-                        <div class="col d-flex justify-content-center">
+                        <div class="col">
                             <router-link to="/">
                         <Button label="Back to home" icon="pi pi-arrow-left" iconPos="left" /></router-link>
+                        </div>
+                        <div class="col d-flex justify-content-end">
+                            <router-link to="/login">
+                        <Button label="Go To Login" icon="pi pi-arrow-right" iconPos="right" /></router-link>
                         </div>
                     </div>
                     <h5 class="card-title">Register</h5>

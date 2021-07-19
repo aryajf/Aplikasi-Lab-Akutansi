@@ -25,7 +25,7 @@ module.exports = {
       },
       long_desc: {
         allowNull: false,
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT('long')
       },
       cover: {
         allowNull: false,

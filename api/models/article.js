@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     slug: DataTypes.STRING,
     short_desc: DataTypes.STRING,
-    long_desc: DataTypes.STRING,
+    long_desc: DataTypes.TEXT,
     cover: DataTypes.STRING,
   }, {
     sequelize,

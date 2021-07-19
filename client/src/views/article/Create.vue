@@ -1,5 +1,62 @@
 <template>
     <div id="article">
+        <Dialog header="Full Preview" v-model:visible="displayMaximizable" :style="{width: '50vw'}" :maximizable="true" :modal="true">
+            <div id="show-article" class="show-article">
+                <div class="row">
+                    <div class="col-12">
+                        <template v-if="imagePreview">
+                            <img :src="imagePreview" alt="" srcset="" class="w-100">
+                        </template>
+                        <template v-else>
+                            <div class="coverPreview shadow-sm mb-3 text-center">
+                                <img src="@/assets/images/image-not-available.png" class="w-100" alt="cover">
+                            </div>
+                        </template>
+                    </div>
+                </div>
+                <div class="row show-article-header">
+                    <h1 data-aos="zoom-in" data-aos-duration="1000" class="d-flex align-items-center justify-content-center">{{form.title}}</h1>
+                    <h3 data-aos="zoom-in-up" data-aos-duration="1500" class="d-flex align-items-center justify-content-center">{{form.short_desc}}</h3>
+                </div>
+                <div class="row">
+                    <div v-html="form.long_desc"></div>
+                </div>
+            </div>
+        </Dialog>
+        <!-- CROP COVER MODAL -->
+        <div class="modal fade" id="cropModal" tabindex="-1" aria-labelledby="cropModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="cropModalLabel"><i class="uil uil-image-edit me-1"></i>Choose Cover</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <div class="coverPreview shadow-sm mb-3 text-center">
+                            <img src="@/assets/images/image-not-available.png" class="w-100" alt="cover">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="cover">
+                                <span class="btn btn-sm bg-az"><i class="uil uil-export me-1"></i>Pilih Cover</span>
+                                <button id="saveBtn" class="btn btn-sm btn-primary ms-2 d-none" data-bs-dismiss="modal" @click="cropCover" :disabled="btnLoading">
+                                    <div class="d-flex">
+                                        <span>Simpan</span>
+                                        <template v-if="btnLoading">
+                                        </template>
+                                        <template v-else><i class="uil uil-save ms-1"></i></template>
+                                    </div>
+                                </button>
+                            </label>
+                            <input type="file" class="d-none" id="cover" v-on:change="onImageChange">
+                        </div>
+                        <div id="cropper-canvas" class="d-none">
+                            <vue-cropper ref="cropper" alt="Crop Image" :background="false" :zoomable="true" :movable="false" :aspect-ratio="16 / 9" preview=".coverPreview" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <navbar bg="" theme="navbar-light"/>
         <div id="aboutpage" class="aboutpage pb-5">
         <svg id="wave-up" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
@@ -15,53 +72,88 @@
         </div>
         <div class="container">
         <div class="row pt-4 pb-3">
-            <div class="col">
-                <h3>Preview</h3>
-                <div class="card mb-3" style="width: 20rem;">
-                    <img src="" class="card-img-top" alt="...">
-                    <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <ScrollTop />
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <router-link to="/article/a"><Button label="Read" icon="pi pi-check" /></router-link>
+            <div class="col-md-8">
+                <form @submit.prevent="submit">
+                <div class="row mb-4">
+                    <div class="col">
+                        <template v-if='imagePreview'>
+                            <img :src="imagePreview" alt="image" class="added-image w-100">
+                            <label data-bs-toggle="modal" data-bs-target="#cropModal" class="my-2">
+                                <span class="btn bg-secondary text-white btn-sm">Ganti Cover<i class="uil uil-image-upload ms-1"></i></span>
+                            </label>
+                        </template>
+
+                        <template v-else>
+                            <label data-bs-toggle="modal" data-bs-target="#cropModal" class="file-upload-cover bg-light cursor-pointer d-block">
+                                <img src="@/assets/images/file-upload.png" alt="Picture Add" class="default-image">
+                                <p>
+                                    Upload Cover
+                                    <span class="text-danger d-block" v-if="formErrors.cover">*{{formErrors.cover[0]}}</span>
+                                </p>
+                            </label>
+                        </template>
                     </div>
                 </div>
-            </div>
-            <div class="col">
-                <div class="row my-2">
+                <div class="row mb-4">
                     <div class="col">
                         <span class="p-field p-float-label p-input-icon-right w-100">
-                            <i class="pi pi-lock"></i>
-                            <InputText id="title" class="w-100" type="text" />
+                            <i class="pi pi-paperclip"></i>
+                            <InputText id="title" :class="{'p-invalid': formErrors.title && formErrors.title.length > 0}" v-model="form.title" class="w-100" type="text" />
                             <label for="title">Judul Artikel</label>
                         </span>
+                        <small class="p-error" v-if="formErrors.title">*{{formErrors.title[0]}}</small>
                     </div>
                 </div>
-                <div class="row my-2">
+                <div class="row mb-4">
                     <div class="col">
                         <span class="p-field p-float-label p-input-icon-right w-100">
-                            <i class="pi pi-lock"></i>
-                            <InputText id="short_desc" class="w-100" type="text" />
+                            <i class="pi pi-pencil"></i>
+                            <InputText id="short_desc" :class="{'p-invalid': formErrors.short_desc && formErrors.short_desc.length > 0}" v-model="form.short_desc" class="w-100" type="text" />
                             <label for="short_desc">Deskripsi pendek</label>
                         </span>
+                        <small class="p-error" v-if="formErrors.short_desc">*{{formErrors.short_desc[0]}}</small>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col">
+                        <!-- <span class="p-field p-float-label p-input-icon-right w-100">
+                            <i class="pi pi-pencil"></i>
+                            <Textarea id="long_desc" :class="{'p-invalid': formErrors.long_desc && formErrors.long_desc.length > 0}" v-model="form.long_desc" :autoResize="true" rows="3" cols="30" class="w-100" />
+                            <label for="long_desc">Deskripsi panjang</label>
+                        </span> -->
+                        <Editor v-model="form.long_desc" editorStyle="height: 320px">
+                        </Editor>
+                        <small class="p-error" v-if="formErrors.long_desc">*{{formErrors.long_desc[0]}}</small>
                     </div>
                 </div>
                 <div class="row my-2">
                     <div class="col">
-                        <span class="p-field p-float-label p-input-icon-right w-100">
-                            <i class="pi pi-lock"></i>
-                            <Textarea id="long_desc" :autoResize="true" rows="3" cols="30" class="w-100" />
-                            <label for="long_desc">Deskripsi panjang</label>
-                        </span>
+                        <Button class="p-button-success" type="submit" label="Submit" iconPos="right" :disabled="btnLoading" :icon="btnLoading ? 'pi pi-spin pi-spinner' : 'pi pi-check'" />
+                    </div>
+                </div>
+                </form>
+            </div>
+            <div class="col">
+                <div class="row justify-content-center">
+                    <h3 class="text-center mb-3">Card Preview</h3>
+                    <div class="card mb-3" style="width: 20rem;">
+                        <div class="card-body">
+                        <template v-if="imagePreview">
+                            <img :src="imagePreview" alt="" srcset="" class="w-100">
+                        </template>
+                        <template v-else>
+                            <div class="coverPreview shadow-sm mb-3 text-center">
+                                <img src="@/assets/images/image-not-available.png" class="w-100" alt="cover">
+                            </div>
+                        </template>
+                        <h5 class="card-title">{{form.title}}</h5>
+                        <p class="card-text">{{form.short_desc}}</p>
+                        <Button label="Read More" icon="pi pi-external-link" @click="openMaximizable" />
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-          <div class="row">
-            <div class="col">
-              
-            </div>
-          </div>
         </div>
       </div>
       <svg id="aboutpage-bottom-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
@@ -74,18 +166,108 @@
     </div>
 </template>
 <script>
-import Textarea from 'primevue/textarea'
+import { ref } from 'vue'
+import Editor from 'primevue/editor'
 import InputText from 'primevue/inputtext'
 import Navbar from "@/components/Navbar.vue"
+import VueCropper from "vue-cropperjs"
+import { mapGetters } from "vuex"
 export default {
+    setup(){
+        const displayMaximizable = ref(false)
+        const openMaximizable = () => {
+            displayMaximizable.value = true
+        }
+        const closeMaximizable = () => {
+            displayMaximizable.value = false
+        }
+        return {displayMaximizable, openMaximizable, closeMaximizable}
+    },
+    data(){
+        return{
+            form:{
+                title: '',
+                short_desc: '',
+                long_desc: '',
+                cover: ''
+            },
+            imagePreview: null
+        }
+    },
+    computed: {
+        ...mapGetters({
+            btnLoading: "btnLoading",
+            formErrors: "formErrors",
+        }),
+    },
+    methods:{
+        onImageChange(e) {
+            let file = e.target.files || e.dataTransfer.files;
+            if (!file.length) {
+                return;
+            }
+            let fileType = file[0].type;
+            if (
+                fileType == "image/png" ||
+                fileType == "image/jpg" ||
+                fileType == "image/jpeg" ||
+                fileType == "image/gif"
+            ) {
+                this.coverName = file[0].name;
+                this.createImage(file[0]);
+            } else {
+                e.target.value = "";
+                window.notyf.error("Cover harus gambar (PNG, JPG, JPEG, GIF)");
+            }
+        },
+        createImage(file) {
+            let reader = new FileReader();
+            reader.onload = (e) => {
+                let saveBtn = document.getElementById("saveBtn");
+                let cropperCanvas = document.getElementById("cropper-canvas");
+                saveBtn.classList.remove("d-none");
+                cropperCanvas.classList.remove("d-none");
+                this.$refs.cropper.replace(e.target.result);
+            };
+            reader.readAsDataURL(file);
+        },
+        cropCover() {
+            this.imagePreview = this.$refs.cropper
+                .getCroppedCanvas()
+                .toDataURL();
+            this.form.cover = this.$refs.cropper
+                .getCroppedCanvas()
+                .toBlob((blob) => {
+                    this.form.cover = blob;
+                });
+        },
+        submit() {
+            const cover = new File([this.form.cover], this.coverName, {
+                lastModified: this.form.cover.lastModified,
+                type: this.form.cover.type,
+            });
+            const data = new FormData()
+            data.append("cover", cover)
+            data.append("title", this.form.title)
+            data.append("short_desc", this.form.short_desc)
+            data.append("long_desc", this.form.long_desc)
+
+            this.$store.dispatch("article/create", data).then((res) => {
+                if (res.status === 201) {
+                    this.$router.push("/article");
+                }
+            });
+        },
+    },
     components:{
       Navbar,
       InputText,
-      Textarea
+      Editor,
+      VueCropper,
     }
 }
 </script>
 <style lang="scss">
 @import "@/assets/sass/app.scss";
-@import "@/assets/sass/article/index.scss";
+@import "@/assets/sass/article/create.scss";
 </style>

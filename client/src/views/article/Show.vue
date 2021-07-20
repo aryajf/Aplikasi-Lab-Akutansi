@@ -13,7 +13,7 @@
             <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <img v-if="article.cover" :src="apiURL+'images/article/'+article.cover" class="d-block w-100" alt="">
+                    <img v-if="article.cover" :src="apiURL+'images/articles/'+article.cover" class="d-block w-100" alt="">
                 </div>
             </div>
             <div class="row show-article-header">

@@ -10,7 +10,7 @@
                             <div class="col-md-6">
                                 <div v-if="user.avatar" class="avatar">
                                     <button class="btn rounded-circle shadow" data-bs-toggle="modal" data-bs-target="#avatarModal"><i class="uil uil-pen"></i></button>
-                                    <img class="rounded-circle shadow-sm" :src="apiURL+'images/avatar/'+user.avatar" alt="avatar">
+                                    <img class="rounded-circle shadow-sm" :src="apiURL+'images/avatars/'+user.avatar" alt="avatar">
                                 </div>
                                 <div v-else class="avatar">
                                     <button class="btn rounded-circle shadow" data-bs-toggle="modal" data-bs-target="#avatarModal"><i class="uil uil-pen"></i></button>

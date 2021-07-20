@@ -10,7 +10,7 @@
                         <template v-else>
                             <div class="coverPreview shadow-sm mb-3 text-center">
                                 <template v-if="article.cover">
-                                    <img :src="apiURL+'images/article/'+article.cover" class="w-100" alt="cover">
+                                    <img :src="apiURL+'images/articles/'+article.cover" class="w-100" alt="cover">
                                 </template>
                                 <template v-else>
                                     <img src="@/assets/images/image-not-available.png" class="w-100" alt="cover">
@@ -39,7 +39,7 @@
                     <div class="modal-body text-center">
                         <div class="coverPreview shadow-sm mb-3 text-center">
                             <template v-if="article.cover">
-                                <img :src="apiURL+'images/article/'+article.cover" class="w-100" alt="cover">
+                                <img :src="apiURL+'images/articles/'+article.cover" class="w-100" alt="cover">
                             </template>
                             <template v-else>
                                 <img src="@/assets/images/image-not-available.png" class="w-100" alt="cover">
@@ -149,7 +149,7 @@
                         <template v-else>
                             <div class="coverPreview shadow-sm mb-3 text-center">
                                 <template v-if="article.cover">
-                                    <img :src="apiURL+'images/article/'+article.cover" class="w-100" alt="cover">
+                                    <img :src="apiURL+'images/articles/'+article.cover" class="w-100" alt="cover">
                                 </template>
                                 <template v-else>
                                     <img src="@/assets/images/image-not-available.png" class="w-100" alt="cover">

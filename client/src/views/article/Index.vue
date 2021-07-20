@@ -30,7 +30,7 @@
                 <div id="carouselExampleDark" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div v-for="(item, index) in articles_slider.article" :class="index == 0 ? 'active' : '' " :key="item.id" class="carousel-item" data-bs-interval="10000">
-                          <img :src="apiURL+'images/article/'+item.cover" class="d-block w-100" alt="">
+                          <img :src="apiURL+'images/articles/'+item.cover" class="d-block w-100" alt="">
                           <div class="carousel-caption d-none d-md-block">
                               <router-link :to="'/article/'+item.slug" style="text-decoration:none;"><h4>{{item.title}}</h4></router-link>
                               <p>{{item.short_desc}}</p>
@@ -67,7 +67,7 @@
           <div class="row" v-if="articles.article && articles.article.length != 0">
             <div class="col d-flex justify-content-center" v-for="item in articles.article" :key="item.id">
               <div class="card mb-3" style="width: 20rem;">
-                <img v-if="item.cover" :src="apiURL+'images/article/'+item.cover" class="card-img-top" :alt="item.title">
+                <img v-if="item.cover" :src="apiURL+'images/articles/'+item.cover" class="card-img-top" :alt="item.title">
                 <div class="card-body">
                   <h5 class="card-title">{{item.title}}</h5>
                   <p class="card-text">{{item.short_desc}}</p>

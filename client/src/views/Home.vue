@@ -59,7 +59,7 @@
           <div class="row" v-if="articles.article.length != 0">
             <div class="col" v-for="item in articles.article" :key="item.id">
               <div class="card mb-3" style="width: 20rem;">
-                <img :src="apiURL+'images/article/'+item.cover" class="card-img-top" :alt="item.title">
+                <img :src="apiURL+'images/articles/'+item.cover" class="card-img-top" :alt="item.title">
                 <div class="card-body">
                   <h5 class="card-title">{{item.title}}</h5>
                   <p class="card-text">{{item.short_desc}}</p>

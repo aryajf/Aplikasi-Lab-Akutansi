@@ -5,11 +5,15 @@ export default({
     namespaced: true,
     state:{
         articles: [],
+        articles_slider: [],
         article: [],
     },
     getters: {
         articles(state){
             return state.articles
+        },
+        articles_slider(state){
+            return state.articles_slider
         },
         article(state){
             return state.article
@@ -18,6 +22,9 @@ export default({
     mutations: {
         SET_ARTICLES(state, data){
             state.articles = data
+        },
+        SET_ARTICLES_SLIDER(state, data){
+            state.articles_slider = data
         },
         SET_ARTICLE(state, data){
             state.article = data
@@ -29,6 +36,7 @@ export default({
                 let res
                 page == null ? res = await axios.get('article') : res = await axios.get(`article?page=${page}`)
                 commit('SET_ARTICLES', res.data)
+                commit('SET_ARTICLES_SLIDER', res.data)
                 return res.data
             }catch(err){
                 return err

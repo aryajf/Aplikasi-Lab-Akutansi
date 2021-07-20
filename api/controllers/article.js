@@ -1,7 +1,7 @@
 const {Article} = require('../models')
 const { Op } = require("sequelize")
 const path = require('path')
-const articleCoverPath = path.join(__dirname, '../public/images/article/')
+const articleCoverPath = path.join(__dirname, '../public/images/articles/')
 const Validator = require('validatorjs');
 const validatorMessage = require('../config/validatorMessage')
 const {compressImage, deleteFile, makeDirectory, createSlug, getPagination, getPagingData} = require('../config/mixins')
@@ -191,24 +191,26 @@ module.exports = {
         }
     },
     delete: async(req, res) => {
-        const article = await findArticle(req.params.slug)
-        if(article != null){
-            deleteFile(articleCoverPath + article.cover)
-            article.destroy()
-
-            res.json({
-                data : {
-                    id: article.id,
-                    title: article.title
-                },
-                message: 'Article berhasil dihapus',
-                request: {
-                    method: req.method,
-                    url: process.env.BASE_URL + 'article/' + req.params.slug
-                },
-                status: true
-            })
-        }else{res.status(404).json({message : 'Article tidak ditemukan', status: false})}
+        if(req.decoded.role == 'Admin'){
+            const article = await findArticle(req.params.slug)
+            if(article != null){
+                deleteFile(articleCoverPath + article.cover)
+                article.destroy()
+    
+                res.json({
+                    data : {
+                        id: article.id,
+                        title: article.title
+                    },
+                    message: 'Article berhasil dihapus',
+                    request: {
+                        method: req.method,
+                        url: process.env.BASE_URL + 'article/' + req.params.slug
+                    },
+                    status: true
+                })
+            }else{res.status(404).json({message : 'Article tidak ditemukan', status: false})}
+        }else{res.status(404).json({message : 'Unauthorized', status: false})}
     },
 }
 

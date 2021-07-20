@@ -1,5 +1,15 @@
 <template>
-    <div id="article" v-if="articles.article">
+    <div id="article">
+        <Dialog header="Logout" v-model:visible="displayDelete" :style="{width: '350px'}" :modal="true">
+          <div class="confirmation-content">
+              <span class="align-base-center">Apakah kamu yakin ingin menghapusnya?</span>
+          </div>
+          <template #footer>
+              <Button label="No" icon="pi pi-times" @click="closeDelete" class="p-button-text"/>
+              <Button label="Yes" icon="pi pi-check" @click="deleteArticle" class="p-button-danger" autofocus />
+          </template>
+        </Dialog>
+
         <navbar bg="" theme="navbar-light"/>
         <div id="aboutpage" class="aboutpage pb-5">
         <svg id="wave-up" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
@@ -14,15 +24,15 @@
           <h1 data-aos="zoom-in" data-aos-duration="1000" class="d-flex align-items-center justify-content-center">Our News & Article</h1>
           <h3 data-aos="zoom-in-up" data-aos-duration="1500" class="d-flex align-items-center justify-content-center">Disini kami menyajikan info & artikel terbaru kami</h3>
         </div>
-        <div class="container">
-          <div class="row" v-if="articles.article.length != 0">
+        <div class="container" v-if="articles_slider.article">
+          <div class="row" v-if="articles_slider.article.length != 0">
             <div class="col-12">
                 <div id="carouselExampleDark" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
                     <div class="carousel-inner">
-                        <div v-for="(item, index) in articles.article" :class="index == 0 ? 'active' : '' " :key="item.id" class="carousel-item" data-bs-interval="10000">
+                        <div v-for="(item, index) in articles_slider.article" :class="index == 0 ? 'active' : '' " :key="item.id" class="carousel-item" data-bs-interval="10000">
                           <img :src="apiURL+'images/article/'+item.cover" class="d-block w-100" alt="">
                           <div class="carousel-caption d-none d-md-block">
-                              <router-link :to="'/article/'+item.slug"><h4>{{item.title}}</h4></router-link>
+                              <router-link :to="'/article/'+item.slug" style="text-decoration:none;"><h4>{{item.title}}</h4></router-link>
                               <p>{{item.short_desc}}</p>
                           </div>
                         </div>
@@ -54,14 +64,26 @@
                 </span>
             </div>
         </div>
-          <div class="row" v-if="articles.article.length != 0">
+          <div class="row" v-if="articles.article && articles.article.length != 0">
             <div class="col d-flex justify-content-center" v-for="item in articles.article" :key="item.id">
               <div class="card mb-3" style="width: 20rem;">
                 <img v-if="item.cover" :src="apiURL+'images/article/'+item.cover" class="card-img-top" :alt="item.title">
                 <div class="card-body">
                   <h5 class="card-title">{{item.title}}</h5>
                   <p class="card-text">{{item.short_desc}}</p>
-                  <router-link :to="'/article/'+item.slug"><Button label="Read" icon="pi pi-check" /></router-link>
+                  <div class="row">
+                    <div class="col-12 d-flex justify-content-end">
+                      <router-link :to="'/article/'+item.slug"><Button class="w-100" label="Read" icon="pi pi-check" /></router-link>
+                    </div>
+                  </div>
+                  <div class="row mt-4">
+                    <div class="col d-flex justify-content-center">
+                      <router-link :to="'/article/update/'+item.slug"><Button class="w-100" label="Update" icon="pi pi-pencil" /></router-link>
+                    </div>
+                    <div class="col d-flex justify-content-end">
+                      <Button @click="openDelete(item.slug)" class="w-100 p-button-danger" label="Delete" icon="pi pi-trash" />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -87,18 +109,43 @@
 import appConfig from "@/config/app"
 import InputText from 'primevue/inputtext'
 import Navbar from "@/components/Navbar.vue"
-import { mapGetters } from "vuex"
+import { mapGetters, useStore } from "vuex"
+import { ref } from 'vue'
 export default {
     setup() {
+      const store = useStore()
+      
+      const slug = ref(null)
+      const displayDelete = ref(false)
+      const openDelete = (item) => {
+        slug.value = item
+        displayDelete.value = true;
+      }
+      const closeDelete = () => {
+        displayDelete.value = false;
+      }
+      const deleteArticle = () => {
+        store.dispatch('article/delete', slug.value)
+        displayDelete.value = false
+      }
       return {
+        slug,
         apiURL: appConfig.apiURL,
+        displayDelete,
+        openDelete,
+        closeDelete,
+        deleteArticle
+      }
+    },
+    data(){
+      return{
         keyword: null,
         paginationSearch: false,
       }
     },
     watch: {
       keyword() {
-        this.search();
+        this.search()
       },
     },
     components:{
@@ -108,7 +155,9 @@ export default {
     computed: {
       ...mapGetters({
         articles: "article/articles",
+        articles_slider: "article/articles_slider",
         authenticated: "auth/authenticated",
+        btnLoading: "btnLoading",
         user: "auth/user",
       }),
     },
@@ -131,14 +180,14 @@ export default {
       search() {
         this.paginationSearch = true;
         if (this.keyword != "") {
-          this.$store.dispatch("proposal/searchProposal", this.keyword).then((res) => {
+          this.$store.dispatch("article/search", this.keyword).then((res) => {
             this.alertSearch = res.message
           })
         } else {
           this.alertSearch = null
           this.getArticles()
         }
-      },
+      }
     }
 }
 </script>

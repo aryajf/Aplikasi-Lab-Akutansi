@@ -7,7 +7,7 @@ const emailConfig = require('../config/email')
 const Validator = require('validatorjs')
 const validatorMessage = require('../config/validatorMessage')
 const path = require('path')
-const avatarPath = path.join(__dirname, '../public/images/avatar/')
+const avatarPath = path.join(__dirname, '../public/images/avatars/')
 const {JWT_SECRET, JWT_SECRET_EXPIRES, BASE_URL, HOME_URL, MAIL_FROM_ADDRESS} = process.env
 const {compressImage, deleteFile} = require('../config/mixins')
 

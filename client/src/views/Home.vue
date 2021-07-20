@@ -93,7 +93,6 @@
       <img id="contact-bottom-1" data-aos-offset="-200" data-aos="fade-up-right" data-aos-duration="1000" src="@/assets/images/homepage-5.png" alt="">
       <img id="contact-bottom-2" data-aos-offset="-200" data-aos="fade-up" class="ms-auto me-auto" data-aos-duration="1500" src="@/assets/images/homepage-1.png" alt="">
       <img id="contact-bottom-3" data-aos-offset="-200" data-aos="fade-up-left" data-aos-duration="1000" src="@/assets/images/homepage-2.png" alt="">
-      
     </div>
   </div>
 </template>

@@ -7,7 +7,7 @@
                 <div class="card" style="width:90%;" data-aos="fade-down" data-aos-offset="-500" data-aos-duration="1500">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col">
+                            <div class="col-md-6">
                                 <div v-if="user.avatar" class="avatar">
                                     <button class="btn rounded-circle shadow" data-bs-toggle="modal" data-bs-target="#avatarModal"><i class="uil uil-pen"></i></button>
                                     <img class="rounded-circle shadow-sm" :src="apiURL+'images/avatar/'+user.avatar" alt="avatar">
@@ -24,7 +24,7 @@
                                 </span>
                             </div>
                             </div>
-                            <div class="col">
+                            <div class="col-md-6 my-2">
                                 <div class="row">
                                     <div class="col">
                                         <router-link to="/">

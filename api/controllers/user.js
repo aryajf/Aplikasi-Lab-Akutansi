@@ -2,7 +2,7 @@ const {User} = require('../models')
 const { Op } = require("sequelize")
 const fs = require('fs')
 const path = require('path')
-const avatarPath = path.join(__dirname, '../public/images/avatar/')
+const avatarPath = path.join(__dirname, '../public/images/avatars/')
 const {getPagination, getPagingData} = require('../config/mixins')
 
 module.exports = {

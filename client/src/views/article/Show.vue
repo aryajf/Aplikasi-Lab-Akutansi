@@ -59,7 +59,11 @@ export default {
     },
     methods: {
       getArticle(){
-        this.$store.dispatch('article/show', this.$route.params.slug)
+        this.$store.dispatch('article/show', this.$route.params.slug).then(res => {
+          if(res.status == 404){
+            this.$router.push({name:'not-found'})
+          }
+        })
       }
     },
 }

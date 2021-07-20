@@ -23,6 +23,14 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
+    beforeEnter: (to, from, next) => {
+      if(store.getters['auth/authenticated']){
+        return next({
+          name : 'not-found'
+        })
+      }
+      next()
+    },
     // route level code-splitting
     // this generates a separate chunk (login.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -31,6 +39,14 @@ const routes = [
   {
     path: '/register',
     name: 'Register',
+    beforeEnter: (to, from, next) => {
+      if(store.getters['auth/authenticated']){
+        return next({
+          name : 'not-found'
+        })
+      }
+      next()
+    },
     // route level code-splitting
     // this generates a separate chunk (register.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -42,7 +58,7 @@ const routes = [
     beforeEnter: (to, from, next) => {
       if(!store.getters['auth/authenticated']){
         return next({
-          name : 'Home'
+          name : 'not-found'
         })
       }
       next()
@@ -58,7 +74,7 @@ const routes = [
     beforeEnter: (to, from, next) => {
       if(!store.getters['auth/authenticated']){
         return next({
-          name : 'Home'
+          name : 'not-found'
         })
       }
       next()
@@ -82,7 +98,7 @@ const routes = [
     beforeEnter: (to, from, next) => {
       if(!store.getters['auth/authenticated'] || store.getters['auth/user'].role == 'Member'){
         return next({
-          name : 'Home'
+          name : 'not-found'
         })
       }
       next()
@@ -98,7 +114,7 @@ const routes = [
     beforeEnter: (to, from, next) => {
       if(!store.getters['auth/authenticated'] || store.getters['auth/user'].role == 'Member'){
         return next({
-          name : 'Home'
+          name : 'not-found'
         })
       }
       next()

@@ -132,8 +132,16 @@ module.exports = {
                 await transporter.sendMail({
                     from: MAIL_FROM_ADDRESS,
                     to: req.body.email,
-                    subject: "Verifikasi email - pojoklaku.com",
-                    html: `<a href='${HOME_URL}verify/${req.body.email}/${token}' target='_blank'>klik link disini gc</a>`,
+                    subject: "Verifikasi email - Labamen",
+                    html: `
+                    <div>
+                        <h1 style="color:#fff;text-align:center;background-color:#333;">Verifikasi Email anda</h1>
+                        <div style="padding: auto 10px;">
+                            <h3>Link akan kadaluarsa dalam 1 hari | Harap jangan bagikan link ini kepada orang lain yaa :)</h3>
+                            <a href='${HOME_URL}verify/${req.body.email}/${token}' target='_blank'>Klik Disini Untuk Verifikasi Email</a>
+                        </div>
+                    </div>
+                    `,
                 })
 
                 if(newUser.token){
@@ -221,10 +229,15 @@ module.exports = {
                 await transporter.sendMail({
                     from: MAIL_FROM_ADDRESS,
                     to: req.body.email,
-                    subject: "Lupa Password - pojoklaku.com",
+                    subject: "Lupa Password - Labamen",
                     html: `
-                    <p>Link akan kadaluarsa dalam 1 jam</p>
-                    <a href='${BASE_URL}password/update/${req.body.email}/${token}' target='_blank'>klik link disini gc</a>
+                    <div>
+                        <h1 style="color:#fff;text-align:center;background-color:#333;">Verifikasi Email anda</h1>
+                        <div style="padding: auto 10px;">
+                            <h3>Link akan kadaluarsa dalam 1 jam | Harap jangan bagikan link ini kepada orang lain yaa :)</h3>
+                            <a href='${HOME_URL}password/update/${req.body.email}/${token}' target='_blank'>klik link disini gc</a>
+                        </div>
+                    </div>
                     `,
                 })
 

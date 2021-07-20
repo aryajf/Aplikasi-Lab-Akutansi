@@ -19,10 +19,10 @@
             <div class="col-12">
                 <div id="carouselExampleDark" class="carousel carousel-dark slide carousel-fade" data-bs-ride="carousel">
                     <div class="carousel-inner">
-                        <div v-for="item in articles.article" :key="item.id" class="carousel-item active" data-bs-interval="10000">
-                          <img src="@/assets/images/tes1.jpg" class="d-block w-100" alt="">
+                        <div v-for="(item, index) in articles.article" :class="index == 0 ? 'active' : '' " :key="item.id" class="carousel-item" data-bs-interval="10000">
+                          <img :src="apiURL+'images/article/'+item.cover" class="d-block w-100" alt="">
                           <div class="carousel-caption d-none d-md-block">
-                              <h4>{{item.title}}</h4>
+                              <router-link :to="'/article/'+item.slug"><h4>{{item.title}}</h4></router-link>
                               <p>{{item.short_desc}}</p>
                           </div>
                         </div>
@@ -39,25 +39,25 @@
             </div>
         </div>
         <div class="row pt-4 pb-3">
-            <div v-if="authenticated" class="col">
+            <div v-if="authenticated && user.role == 'Admin'" class="col">
                 <span class="p-float-label p-input-icon-right">
-                    <router-link to="/article/create">
-                    <Button label="Tambah Artikel" icon="pi pi-plus" iconPos="left" />
+                    <router-link to="/article/create" style="text-decoration:none;">
+                      <Button label="Tambah Artikel" icon="pi pi-plus" iconPos="left" />
                     </router-link>
                 </span>
             </div>
             <div class="col d-flex justify-content-end">
                 <span class="p-float-label p-input-icon-right">
-                    <i class="pi pi-search" />
-                    <InputText class="fw-bold w-100 py-3" id="search" type="text" v-model="value" />
+                    <i :class="btnLoading ? 'pi pi-spin pi-spinner' : 'pi pi-search'" />
+                    <InputText class="fw-bold w-100 py-3" id="search" type="text" v-model="keyword" :disabled="btnLoading" />
                     <label for="search">Search Article & News</label>
                 </span>
             </div>
         </div>
           <div class="row" v-if="articles.article.length != 0">
-            <div class="col" v-for="item in articles.article" :key="item.id">
+            <div class="col d-flex justify-content-center" v-for="item in articles.article" :key="item.id">
               <div class="card mb-3" style="width: 20rem;">
-                <img :src="apiURL+'images/article/'+item.cover" class="card-img-top" :alt="item.title">
+                <img v-if="item.cover" :src="apiURL+'images/article/'+item.cover" class="card-img-top" :alt="item.title">
                 <div class="card-body">
                   <h5 class="card-title">{{item.title}}</h5>
                   <p class="card-text">{{item.short_desc}}</p>
@@ -65,6 +65,7 @@
                 </div>
               </div>
             </div>
+            <Paginator v-if="articles" @page="changePage($event)"  v-model:rows="articles.limitItems" :totalRecords="articles.totalItems" />
           </div>
           <div class="row" v-else>
             <div class="col">
@@ -91,7 +92,14 @@ export default {
     setup() {
       return {
         apiURL: appConfig.apiURL,
+        keyword: null,
+        paginationSearch: false,
       }
+    },
+    watch: {
+      keyword() {
+        this.search();
+      },
     },
     components:{
       Navbar,
@@ -101,10 +109,36 @@ export default {
       ...mapGetters({
         articles: "article/articles",
         authenticated: "auth/authenticated",
+        user: "auth/user",
       }),
     },
     created(){
-      this.$store.dispatch('article/index')
+      this.getArticles()
+    },
+    methods:{
+      getArticles(){
+        this.paginationSearch = false
+        this.$store.dispatch('article/index')
+      },
+      changePage(event) {
+        if (this.paginationSearch == true) {
+          const data = { keyword: this.keyword, page: event.page }
+          this.$store.dispatch("article/search", data)
+        } else {
+          this.$store.dispatch("article/index", event.page)
+        }
+      },
+      search() {
+        this.paginationSearch = true;
+        if (this.keyword != "") {
+          this.$store.dispatch("proposal/searchProposal", this.keyword).then((res) => {
+            this.alertSearch = res.message
+          })
+        } else {
+          this.alertSearch = null
+          this.getArticles()
+        }
+      },
     }
 }
 </script>

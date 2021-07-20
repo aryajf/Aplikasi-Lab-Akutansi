@@ -13,15 +13,15 @@
             <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <img src="@/assets/images/tes1.jpg" class="d-block w-100" alt="">
+                    <img v-if="article.cover" :src="apiURL+'images/article/'+article.cover" class="d-block w-100" alt="">
                 </div>
             </div>
             <div class="row show-article-header">
-                <h1 data-aos="zoom-in" data-aos-duration="1000" class="d-flex align-items-center justify-content-center">Our News & Article</h1>
-                <h3 data-aos="zoom-in-up" data-aos-duration="1500" class="d-flex align-items-center justify-content-center">Disini kami menyajikan info & artikel terbaru kami</h3>
+                <h1 data-aos="zoom-in" data-aos-duration="1000" class="d-flex align-items-center justify-content-center">{{article.title}}</h1>
+                <h3 data-aos="zoom-in-up" data-aos-duration="1500" class="d-flex align-items-center justify-content-center">{{article.short_desc}}</h3>
             </div>
           <div class="row">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit mollitia, quaerat placeat quibusdam, minima ipsam doloremque voluptatum, sunt rerum iure impedit. Magnam, a dolores veniam dolor iusto atque accusamus? Qui.</p>
+            <div v-html="article.long_desc"></div>
           </div>
         </div>
       </div>
@@ -35,11 +35,33 @@
     </div>
 </template>
 <script>
+import appConfig from "@/config/app"
 import Navbar from "@/components/Navbar.vue"
+import { mapGetters } from "vuex"
 export default {
+    setup() {
+      return {
+        apiURL: appConfig.apiURL,
+      }
+    },
     components:{
       Navbar,
-    }
+    },
+    computed: {
+      ...mapGetters({
+        article: "article/article",
+        authenticated: "auth/authenticated",
+        user: "auth/user",
+      }),
+    },
+    created(){
+      this.getArticle()
+    },
+    methods: {
+      getArticle(){
+        this.$store.dispatch('article/show', this.$route.params.slug)
+      }
+    },
 }
 </script>
 <style lang="scss">

@@ -248,11 +248,7 @@ export default {
                 data.append("short_desc", this.form.short_desc)
                 data.append("long_desc", this.form.long_desc)
 
-                this.$store.dispatch("article/create", data).then((res) => {
-                    if (res.status === 201) {
-                        this.$router.push("/article");
-                    }
-                });
+                this.$store.dispatch("article/create", data)
             }else{
                 window.notyf.error('Anda belum mengupload foto')
             }

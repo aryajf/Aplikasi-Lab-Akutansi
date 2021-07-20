@@ -9,7 +9,7 @@ const {compressImage, deleteFile, makeDirectory, createSlug, getPagination, getP
 module.exports = {
     index: async(req, res) => {
         let { page } = req.query
-        const { limit, offset } = getPagination(page, 8)
+        const { limit, offset } = getPagination(page, 9)
         
         await Article.findAndCountAll({limit,offset,order:[['updatedAt', 'DESC']]}).then(data => {
             const { totalItems, dataPaginate, totalPages, currentPage } = getPagingData(data, page, limit)
@@ -39,7 +39,7 @@ module.exports = {
         }
 
         let { page } = req.query
-        const { limit, offset } = getPagination(page, 8)
+        const { limit, offset } = getPagination(page, 9)
         
         await Article.findAndCountAll({limit,offset,order:[['updatedAt', 'DESC']],where:{
             title : {
@@ -92,7 +92,6 @@ module.exports = {
             long_desc: req.body.long_desc,
             cover: '',
         }
-        console.log(articleReq.long_desc);
 
         if(req.files.cover){
             articleReq.cover = req.files.cover[0].filename
@@ -127,7 +126,6 @@ module.exports = {
                 status: true,
             })
         }catch(err){
-            console.log(err.message);
             deleteFile(req.files.cover[0].path)
             res.status(400).json({
                 error: err.message,

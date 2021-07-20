@@ -1,4 +1,5 @@
 import axios from 'axios'
+import router from '@/router'
 
 export default({
     namespaced: true,
@@ -60,9 +61,12 @@ export default({
             commit('SET_FORM_ERRORS', [], {root: true})          
             try{
                 let response = await axios.post('article', credentials)
-                commit('SET_BUTTON_LOADING', false, {root: true})        
-                window.notyf.success(response.data.message)
-                dispatch('index')
+                setTimeout(function () {
+                    dispatch('index')
+                    router.push('/article')
+                    window.notyf.success(response.data.message)
+                    commit('SET_BUTTON_LOADING', false, {root: true})        
+                }, 2000)
                 return response
             }catch(err){
                 if(err.response){

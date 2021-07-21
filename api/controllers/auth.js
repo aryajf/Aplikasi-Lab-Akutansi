@@ -79,7 +79,8 @@ module.exports = {
                     data: {
                         id: user.id,
                         email: user.email,
-                        nama: user.nama
+                        nama: user.nama,
+                        role: user.role
                     },
                     message: 'Berhasil Login',
                     request: {
@@ -103,9 +104,8 @@ module.exports = {
 
         const userReq = {
             nama: req.body.nama,
-            phone: req.body.phone,
             email: req.body.email,
-            alamat: req.body.alamat,
+            role: req.body.role,
             password: req.body.password,
             confirmPassword: req.body.confirmPassword
         }
@@ -124,6 +124,7 @@ module.exports = {
                 const newUser = await User.create({
                     email: userReq.email,
                     nama: userReq.nama,
+                    role: req.body.role,
                     password: hashPassword(userReq.password),
                     token: token
                 })
@@ -423,9 +424,8 @@ function userValidation(dataRequest, url){
     if(url == '/register'){
         rules = {
             nama: 'required|min:3',
-            phone: 'required|min:5',
             email: 'required|email|min:5',
-            alamat: 'required|min:10',
+            role: 'required',
             password: 'required|min:5',
             confirmPassword: 'required|min:5|same:password'
         }

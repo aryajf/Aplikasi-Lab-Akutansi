@@ -186,7 +186,8 @@ export default {
                 long_desc: '',
                 cover: ''
             },
-            imagePreview: null
+            coverName: '',
+            imagePreview: ''
         }
     },
     computed: {

@@ -83,7 +83,7 @@
         <div class="container">
         <div class="row pt-4 pb-3">
             <div class="col-md-8">
-                <form @submit.prevent="submit">
+                <form @submit.prevent="update">
                 <div class="row mb-4">
                     <div class="col">
                         <template v-if='imagePreview'>
@@ -133,7 +133,7 @@
                 </div>
                 <div class="row my-2">
                     <div class="col">
-                        <Button class="p-button-success" type="submit" label="Submit" iconPos="right" :disabled="btnLoading" :icon="btnLoading ? 'pi pi-spin pi-spinner' : 'pi pi-check'" />
+                        <Button class="p-button-success" type="submit" label="Update" iconPos="right" :disabled="btnLoading" :icon="btnLoading ? 'pi pi-spin pi-spinner' : 'pi pi-check'" />
                     </div>
                 </div>
                 </form>
@@ -204,7 +204,8 @@ export default {
             form:{
                 cover: ''
             },
-            imagePreview: null
+            coverName: "",
+            imagePreview: "",
         }
     },
     computed: {
@@ -261,22 +262,23 @@ export default {
                     this.form.cover = blob;
                 });
         },
-        submit() {
+        update() {
+            console.log(this.form.cover);
+            console.log(this.coverName);
             const cover = new File([this.form.cover], this.coverName, {
                 lastModified: this.form.cover.lastModified,
                 type: this.form.cover.type,
             });
-            if(this.form.cover != ''){
-                const data = new FormData()
-                data.append("cover", cover)
-                data.append("title", this.article.title)
-                data.append("short_desc", this.article.short_desc)
-                data.append("long_desc", this.article.long_desc)
+            const data = new FormData()
+            data.append("cover", cover)
+            data.append("title", this.article.title)
+            data.append("short_desc", this.article.short_desc)
+            data.append("long_desc", this.article.long_desc)
 
-                this.$store.dispatch("article/create", data)
-            }else{
-                window.notyf.error('Anda belum mengupload foto')
-            }
+            this.$store.dispatch("article/update", [
+                this.$route.params.slug,
+                data
+            ])
         },
     },
     components:{

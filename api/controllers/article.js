@@ -136,20 +136,20 @@ module.exports = {
     },
     update: async(req, res) => {
         let article = await findArticle(req.params.slug)
-
+        
         if(article == null){
             res.status(404).json({message : 'Article tidak ditemukan', status: false})
             deleteFile(req.files.cover[0].path)
             return 
         }
-
+        
         let articleReq = {
             title: req.body.title,
             short_desc: req.body.short_desc,
             long_desc: req.body.long_desc,
             cover: '',
         }
-
+        
         if(!req.files.cover){
             articleReq.cover = article.cover
             if(articleValidation(articleReq) != null){
@@ -158,6 +158,7 @@ module.exports = {
             }
 
         }else if(req.files.cover){
+            console.log(1);
             articleReq.cover = req.files.cover[0].filename
             if(articleValidation(articleReq) != null){
                 res.status(400).send(articleValidation(articleReq))

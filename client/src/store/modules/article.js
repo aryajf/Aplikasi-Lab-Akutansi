@@ -29,6 +29,11 @@ export default({
         SET_ARTICLE(state, data){
             state.article = data
         },
+        REMOVE_ARTICLE(state, slug){
+            state.article.splice(state.article.findIndex(function(i){
+                return i.slug === slug;
+            }), 1);
+        },
     },
     actions: {
         async index({commit}, page){
@@ -68,14 +73,15 @@ export default({
             commit('SET_BUTTON_LOADING', true, {root: true})
             commit('SET_FORM_ERRORS', [], {root: true})          
             try{
-                let response = await axios.post('article', credentials)
-                setTimeout(function () {
+                 await axios.post('article', credentials).then(response =>{
                     dispatch('index')
-                    router.push('/article')
-                    window.notyf.success(response.data.message)
-                    commit('SET_BUTTON_LOADING', false, {root: true})        
-                }, 2000)
-                return response
+                    setTimeout(function () {
+                        window.notyf.success(response.data.message)
+                        commit('SET_BUTTON_LOADING', false, {root: true})        
+                        router.push('/article')
+                    }, 3000)
+                    return response
+                })
             }catch(err){
                 if(err.response){
                     if(err.response.data.errors){
@@ -89,13 +95,17 @@ export default({
         },
         async update({commit, dispatch}, [slug, credentials]){
             commit('SET_BUTTON_LOADING', true, {root: true})
-            commit('SET_FORM_ERRORS', [], {root: true})          
+            commit('SET_FORM_ERRORS', [], {root: true})
             try{
-                let response = await axios.put(`article/${slug}`, credentials)
-                commit('SET_BUTTON_LOADING', false, {root: true})        
-                window.notyf.success(response.data.message)
-                dispatch('index')
-                return response
+                await axios.put(`article/${slug}`, credentials).then(response =>{
+                    dispatch('index')
+                    setTimeout(function () {
+                        window.notyf.success(response.data.message)
+                        commit('SET_BUTTON_LOADING', false, {root: true})        
+                        router.push('/article')
+                    }, 3000)
+                    return response
+                })
             }catch(err){
                 if(err.response){
                     if(err.response.data.errors){
@@ -107,12 +117,15 @@ export default({
                 return err.response
             }
         },
-        async delete({commit, dispatch}, slug){
+        async delete({state,commit, dispatch}, slug){
             commit('SET_BUTTON_LOADING', true, {root: true})
             try{
                 let response = await axios.delete(`article/${slug}`)
                 commit('SET_BUTTON_LOADING', false, {root: true})        
                 window.notyf.success(response.data.message)
+                if(state.article.length == 1){
+                    commit('REMOVE_ARTICLE', slug)
+                }
                 dispatch("index")
                 return response
             }catch(err){

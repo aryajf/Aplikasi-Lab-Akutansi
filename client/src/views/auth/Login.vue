@@ -6,7 +6,7 @@
                     <div class="row mb-3">
                         <div class="col d-flex justify-content-center">
                             <router-link to="/">
-                                <Button label="Back to home" icon="pi pi-arrow-left" iconPos="left" />
+                                <Button label="Back to home" icon="pi pi-arrow-left" iconPos="left" class="p-button-text" />
                             </router-link>
                         </div>
                     </div>

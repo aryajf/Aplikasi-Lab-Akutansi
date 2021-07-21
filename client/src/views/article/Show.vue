@@ -23,6 +23,40 @@
           <div class="row">
             <div v-html="article.long_desc"></div>
           </div>
+          <div class="row">
+            <h5 class="mt-5 mb-3">Komentar :</h5>
+            <div class="mb-3">
+              <form action="">
+                <div class="col-12">
+                  <Editor placeholder="Tulis Komentar kamu" v-model="value" editorStyle="height: 150px">
+                    <template #toolbar>
+                      <span class="ql-formats">
+                        <button class="ql-bold"></button>
+                        <button class="ql-italic"></button>
+                        <button class="ql-underline"></button>
+                      </span>
+                    </template>
+                  </Editor>
+                </div>
+                <div class="col-12 mt-2 text-end">
+                  <Button label="Post Comment" icon="pi pi-send" iconPos="right" autofocus />
+                </div>
+              </form>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-2">
+                <img src="@/assets/images/no-avatar.png" style="border:0;" class="img-thumbnail" alt="...">
+              </div>
+              <div class="col-md-10 align-self-center">
+                <div class="text-end">
+                  <small>14 januari 2019</small>
+                </div>
+                <div>
+                  haloo ini baguss sekali. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet harum reiciendis natus totam repellat tempora assumenda inventore doloribus? Earum veniam dignissimos ipsum eaque. Architecto veritatis earum et molestias nulla fugit.
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <svg id="show-article-bottom-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
@@ -37,6 +71,7 @@
 <script>
 import appConfig from "@/config/app"
 import Navbar from "@/components/Navbar.vue"
+import Editor from 'primevue/editor'
 import { mapGetters } from "vuex"
 export default {
     setup() {
@@ -46,6 +81,7 @@ export default {
     },
     components:{
       Navbar,
+      Editor
     },
     computed: {
       ...mapGetters({

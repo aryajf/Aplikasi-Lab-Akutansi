@@ -76,7 +76,7 @@
                       <router-link :to="'/article/'+item.slug"><Button class="w-100" label="Read" icon="pi pi-check" /></router-link>
                     </div>
                   </div>
-                  <div class="row mt-4">
+                  <div class="row mt-4" v-if="user.role == 'Admin'">
                     <div class="col d-flex justify-content-center">
                       <router-link :to="'/article/update/'+item.slug"><Button class="w-100" label="Update" icon="pi pi-pencil" /></router-link>
                     </div>

@@ -1,37 +1,33 @@
 <template>
     <div id="register" class="container-fluid">
         <div style="height:100vh;" class="row align-middle align-items-center d-flex justify-content-center">
-            <div class="card" data-aos="fade-down" data-aos-offset="-500" data-aos-duration="1500" style="width: 30rem;">
+            <div class="card" data-aos="fade-down" data-aos-offset="-500" data-aos-duration="1500" style="width: 40rem;">
                 <div class="card-body">
+                    <form @submit.prevent="register">
                     <div class="row mb-3">
                         <div class="col">
                             <router-link to="/">
-                        <Button label="Back to home" icon="pi pi-arrow-left" iconPos="left" /></router-link>
+                        <Button class="p-button-text" label="Back to home" icon="pi pi-arrow-left" iconPos="left" /></router-link>
+                        </div>
+                        <div class="col">
+                            <SelectButton :class="{'p-invalid': formErrors.role && formErrors.role.length > 0}" v-model="form.role" :options="roleList" />
+                            <small class="p-error" v-if="formErrors.role">*{{formErrors.role[0]}}</small>
                         </div>
                         <div class="col d-flex justify-content-end">
                             <router-link to="/login">
-                        <Button label="Go To Login" icon="pi pi-arrow-right" iconPos="right" /></router-link>
+                        <Button class="p-button-text" label="Go To Login" icon="pi pi-arrow-right" iconPos="right" /></router-link>
                         </div>
                     </div>
                     <h5 class="card-title">Register</h5>
                     <hr>
-                    <form @submit.prevent="register">
                     <div class="row my-4">
                         <div class="col">
-                            <span class="p-float-label p-input-icon-left">
+                            <span class="p-float-label p-input-icon-left w-100">
                                 <i class="pi pi-user" />
                                 <InputText :class="{'p-invalid': formErrors.nama && formErrors.nama.length > 0}" class="w-100" id="nama" type="text" v-model="form.nama" />
                                 <label for="nama">Nama</label>
                             </span>
                             <small class="p-error" v-if="formErrors.nama">*{{formErrors.nama[0]}}</small>
-                        </div>
-                        <div class="col">
-                            <span class="p-float-label p-input-icon-left">
-                                <i class="pi pi-phone" />
-                                <InputText type="number" :class="{'p-invalid': formErrors.phone && formErrors.phone.length > 0}" class="w-100" id="phone" v-model="form.phone" min="0" />
-                                <label for="phone">Number Phone</label>
-                            </span>
-                            <small class="p-error" v-if="formErrors.phone">*{{formErrors.phone[0]}}</small>
                         </div>
                     </div>
                     <div class="row my-4">
@@ -43,16 +39,6 @@
                             </span>
                         </div>
                         <small class="p-error" v-if="formErrors.email">*{{formErrors.email[0]}}</small>
-                    </div>
-                    <div class="row my-4">
-                        <div class="col">
-                            <span class="p-field p-float-label p-input-icon-left w-100">
-                                <i class="pi pi-map-marker"></i>        
-                                <Textarea :class="{'p-invalid': formErrors.alamat && formErrors.alamat.length > 0}" id="alamat" v-model="form.alamat" :autoResize="true" rows="2" cols="30" class="w-100" />
-                                <label for="alamat">Alamat</label>
-                            </span>
-                            <small class="p-error" v-if="formErrors.alamat">*{{formErrors.alamat[0]}}</small>
-                        </div>
                     </div>
                     <div class="row my-4">
                         <div class="col">
@@ -76,9 +62,7 @@
                         <div class="col">
                             <vue-recaptcha siteKey="6LfAcS0bAAAAAE5NZh-WTsC7VxEK7cBWjXGDi3gm" size="normal" theme="light" :tabindex="0" @verify="recaptchaVerified" @expire="recaptchaExpired" @fail="recaptchaFailed" ref="vueRecaptcha"></vue-recaptcha>
                         </div>
-                    </div>
-                    <div class="row my-4">
-                        <div class="col">
+                        <div class="col text-end align-self-end">
                             <Button class="p-button-success" type="submit" label="Submit" iconPos="right" :disabled="btnLoading" :icon="btnLoading ? 'pi pi-spin pi-spinner' : 'pi pi-check'" />
                         </div>
                     </div>
@@ -86,16 +70,14 @@
                 </div>
             </div>
         </div>
-        <img data-aos="fade-left" data-aos-offset="-500" data-aos-duration="1500" id="register-img-1" src="@/assets/images/asisten.png" alt="">
-        <img data-aos="fade-down-right" data-aos-offset="-500" data-aos-duration="1500" id="register-img-2" src="@/assets/images/register.png" alt="">
     </div>
 </template>
 
 <script>
 import vueRecaptcha from "vue3-recaptcha2"
 import Button from 'primevue/button'
+import SelectButton from 'primevue/selectbutton'
 import InputText from 'primevue/inputtext'
-import Textarea from 'primevue/textarea'
 import { mapGetters } from "vuex"
 
 export default {
@@ -103,13 +85,13 @@ export default {
         return {
             form:{
                 nama: '',
-                phone: null,
                 email: '',
-                alamat: '',
                 password: '',
+                role: 'Member',
                 confirmPassword: '',
                 tokenRecaptcha: null,
-            }
+            },
+			roleList: ['Member', 'Admin']
         }
     },
     computed: {
@@ -135,8 +117,8 @@ export default {
     components:{
         vueRecaptcha,
         InputText,
-        Textarea,
         Button,
+        SelectButton,
     }
 }
 </script>

@@ -96,7 +96,7 @@ const routes = [
     path: '/article/create',
     name: 'Create Article',
     beforeEnter: (to, from, next) => {
-      if(!store.getters['auth/authenticated'] || store.getters['auth/user'].role == 'Member'){
+      if(!store.getters['auth/authenticated'] || store.getters['auth/user'].role != 'Admin'){
         return next({
           name : 'not-found'
         })
@@ -112,7 +112,7 @@ const routes = [
     path: '/article/update/:slug',
     name: 'Update Article',
     beforeEnter: (to, from, next) => {
-      if(!store.getters['auth/authenticated'] || store.getters['auth/user'].role == 'Member'){
+      if(!store.getters['auth/authenticated'] || store.getters['auth/user'].role != 'Admin'){
         return next({
           name : 'not-found'
         })

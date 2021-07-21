@@ -115,11 +115,11 @@ export default({
             commit('SET_BUTTON_LOADING', true, {root: true})
 
             let data = await axios.put('profile/updateAvatar', avatar).then(res => {
-                commit('SET_BUTTON_LOADING', false, {root: true})
                 setTimeout(function () {
                     dispatch('getProfile')
-                }, 1000)
-                window.notyf.success(res.data.message)
+                    commit('SET_BUTTON_LOADING', false, {root: true})
+                    window.notyf.success(res.data.message)
+                }, 3000)
                 return res
             }).catch(err => {
                 commit('SET_BUTTON_LOADING', false, {root: true})

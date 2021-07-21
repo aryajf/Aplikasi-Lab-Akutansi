@@ -1,12 +1,9 @@
 const {Article, Comment, User} = require('../models')
-const { Op } = require("sequelize")
-const Validator = require('validatorjs');
+const Validator = require('validatorjs')
 const validatorMessage = require('../config/validatorMessage')
-const {compressImage, deleteFile, makeDirectory, createSlug, getPagination, getPagingData} = require('../config/mixins')
+const {deleteFile} = require('../config/mixins')
 
 module.exports = {
-    index: async(req, res) => {
-    },
     store: async(req, res) => {
         let article = await Article.findOne({where: {slug: req.params.slug}})
         let commentReq = {
@@ -35,7 +32,6 @@ module.exports = {
                 status: true,
             })
         }catch(err){
-            console.log(err);
             res.status(400).json({
                 error: err.message,
                 message: 'Terjadi kesalahan saat menambah komentar',
@@ -44,25 +40,21 @@ module.exports = {
         }
     },
     delete: async(req, res) => {
-        if(req.decoded.role == 'Admin'){
-            const article = await findArticle(req.params.slug)
-            if(article != null){
-                deleteFile(articleCoverPath + article.cover)
-                article.destroy()
+        let article = await Article.findOne({where: {slug: req.params.slug}})
+        let comment = await Comment.findOne({where: {article_id: article.id}})
+        if(req.decoded.id === comment.user_id){
+            if(comment != null){
+                comment.destroy()
     
                 res.json({
-                    data : {
-                        id: article.id,
-                        title: article.title
-                    },
-                    message: 'Article berhasil dihapus',
+                    message: 'Komentar berhasil dihapus',
                     request: {
                         method: req.method,
-                        url: process.env.BASE_URL + 'article/' + req.params.slug
+                        url: process.env.BASE_URL + 'comment/' + req.params.slug
                     },
                     status: true
                 })
-            }else{res.status(404).json({message : 'Article tidak ditemukan', status: false})}
+            }else{res.status(404).json({message : 'Komentar tidak ditemukan', status: false})}
         }else{res.status(404).json({message : 'Unauthorized', status: false})}
     },
 }

@@ -263,8 +263,6 @@ export default {
                 });
         },
         update() {
-            console.log(this.form.cover);
-            console.log(this.coverName);
             const cover = new File([this.form.cover], this.coverName, {
                 lastModified: this.form.cover.lastModified,
                 type: this.form.cover.type,

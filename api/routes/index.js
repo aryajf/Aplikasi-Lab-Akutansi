@@ -3,7 +3,6 @@ var router = express.Router()
 
 // CALL CONTROLLER
 const auth = require('../controllers/auth')
-const user = require('../controllers/user')
 const article = require('../controllers/article')
 const comments = require('../controllers/comments')
 
@@ -27,15 +26,6 @@ router.post('/password/forgot', auth.forgotPasswordRequest)
 router.put('/password/update/:email/:token', auth.updatePassword)
 router.post('/password/change', checkAuth, auth.changePassword)
 
-// ADMIN
-router.route('/user')
-  .get(checkAuth, isAdmin, user.getUsers)
-router.route('/user/search/:keyword')
-  .get(checkAuth, isAdmin, user.searchUsers)
-router.route('/user/:id')
-  .get(checkAuth, isAdmin, user.showUsers)
-  .delete(checkAuth, isAdmin, user.deleteUser)
-
 // ARTICLE
 router.route('/article')
   .get(article.index)
@@ -46,7 +36,6 @@ router.route('/article/search/:keyword')
   .get(article.search)
 
 router.route('/article/comments/:slug')
-  .get(comments.index)
   .put(checkAuth, comments.store)
   .delete(checkAuth, comments.delete)
 

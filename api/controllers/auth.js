@@ -13,13 +13,13 @@ const {compressImage, deleteFile} = require('../config/mixins')
 
 module.exports = {
     login: async(req, res) => {
-        // if(!req.body.tokenRecaptcha){
-        //     res.status(400).json({
-        //         message: 'Human Verification belum anda centang',
-        //         status: false,
-        //     })
-        //     return
-        // }
+        if(!req.body.tokenRecaptcha){
+            res.status(400).json({
+                message: 'Human Verification belum anda centang',
+                status: false,
+            })
+            return
+        }
 
         const userReq = {
             email: req.body.email,
@@ -94,13 +94,13 @@ module.exports = {
         }
     },
     register: async(req, res) => {
-        // if(!req.body.tokenRecaptcha){
-        //     res.status(400).json({
-        //         message: 'Human Verification belum anda centang',
-        //         status: false,
-        //     })
-        //     return
-        // }
+        if(!req.body.tokenRecaptcha){
+            res.status(400).json({
+                message: 'Human Verification belum anda centang',
+                status: false,
+            })
+            return
+        }
 
         const userReq = {
             nama: req.body.nama,
@@ -200,7 +200,6 @@ module.exports = {
     },
     verifyEmail: async (req, res) => {
         let user = await findUser(req.params.email)
-        console.log(user);
         if(user.token != req.params.token){
             res.status(404).json({
                 message: 'Link tidak valid',

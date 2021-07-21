@@ -1,4 +1,4 @@
-const {Article} = require('../models')
+const {Article, Comment, User} = require('../models')
 const { Op } = require("sequelize")
 const path = require('path')
 const articleCoverPath = path.join(__dirname, '../public/images/articles/')
@@ -158,7 +158,6 @@ module.exports = {
             }
 
         }else if(req.files.cover){
-            console.log(1);
             articleReq.cover = req.files.cover[0].filename
             if(articleValidation(articleReq) != null){
                 res.status(400).send(articleValidation(articleReq))
@@ -216,7 +215,17 @@ module.exports = {
 }
 
 function findArticle(slug){
-    return Article.findOne({where: {slug: slug}})
+    return Article.findOne({where: {slug: slug},
+        include : [{
+            model: Comment,
+            as: 'comment',
+            include : [{model : User, as: 'user'}] // nested association
+        },
+    ],
+    order:[
+        [{model: Comment, as: 'comment'}, 'createdAt', 'DESC']
+    ]
+    })
 }
 
 function articleValidation(dataRequest){

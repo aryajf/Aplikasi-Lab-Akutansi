@@ -28,7 +28,7 @@
             <div class="mb-3" v-if="authenticated">
               <form @submit.prevent="postComment">
                 <div class="col-12 editor-container">
-                  <Editor :class="{'p-invalid': formErrors.message && formErrors.message.length > 0}" placeholder="Tulis Komentar kamu" v-model="message" editorStyle="height: 150px">
+                  <Editor :class="{'p-invalid': formErrors.message && formErrors.message.length > 0}" placeholder="Tulis Komentar kamu" v-model="message" editorStyle="height: 200px">
                     <template #toolbar>
                       <span class="ql-formats">
                         <button class="ql-bold"></button>
@@ -40,24 +40,33 @@
                   <small class="p-error" v-if="formErrors.message">*{{formErrors.message[0]}}</small>
                 </div>
                 <div class="col-12 mt-2 text-end">
-                  <Button type="submit" label="Post Comment" :disabled="btnLoading" :icon="btnLoading ? 'pi pi-spin pi-spinner' : 'pi pi-send'" iconPos="right" autofocus />
+                  <Button type="submit" label="Send Message" :disabled="btnLoading" :icon="btnLoading ? 'pi pi-spin pi-spinner' : 'pi pi-send'" iconPos="right" autofocus />
                 </div>
               </form>
             </div>
             <div v-else>
               <div class="alert alert-info text-center">Login terlebih dahulu agar bisa berkomentar</div>
             </div>
-            <div class="row mb-3">
-              <div class="col-md-2">
-                <img src="@/assets/images/no-avatar.png" style="border:0;" class="img-thumbnail" alt="...">
-              </div>
-              <div class="col-md-10 align-self-center">
-                <div class="text-end">
-                  <small>14 januari 2019</small>
+            <div class="container" style="overflow-y:scroll;height:100vh">
+              <div class="row" v-for="item in article.comment" :key="item.id">
+                <div class="col-md-2">
+                  <img v-if="item.user.avatar" :src="apiURL+'images/avatars/'+item.user.avatar" style="border:0;" class="img-thumbnail rounded-circle" :alt="item.user.nama">
+                  <img v-else src="@/assets/images/no-avatar.png" style="border:0;" class="img-thumbnail" :alt="item.user.nama">
                 </div>
-                <div>
-                  haloo ini baguss sekali. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Amet harum reiciendis natus totam repellat tempora assumenda inventore doloribus? Earum veniam dignissimos ipsum eaque. Architecto veritatis earum et molestias nulla fugit.
+                <div class="col-md-10 align-self-center">
+                  <div class="row">
+                    <div class="col">
+                      <h5>{{item.user.nama}}</h5>
+                    </div>
+                    <div class="col">
+                      <div class="text-end">
+                        <small>{{DateFormatAgo(item.updatedAt)}}</small>
+                      </div>
+                    </div>
+                  </div>
+                  <div v-html="item.message"></div>
                 </div>
+                <hr class="my-3">
               </div>
             </div>
           </div>
@@ -75,9 +84,11 @@
 <script>
 import appConfig from "@/config/app"
 import Navbar from "@/components/Navbar.vue"
+import Mixins from "@/mixins"
 import Editor from 'primevue/editor'
 import { mapGetters } from "vuex"
 export default {
+    mixins: [Mixins],
     setup() {
       return {
         apiURL: appConfig.apiURL,
@@ -113,7 +124,11 @@ export default {
         })
       },
       postComment(){
-        this.$store.dispatch('comment/create', {slug:this.$route.params.slug, message:this.message})
+        this.$store.dispatch('comment/create', {slug:this.$route.params.slug, message:this.message}).then(res => {
+          if(res.status == 201){
+            this.message = ''
+          }
+        })
       }
     },
 }

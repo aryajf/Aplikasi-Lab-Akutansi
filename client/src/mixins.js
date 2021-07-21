@@ -10,6 +10,9 @@ const Mixins = {
     DateFormat(item) {
       return moment(item).locale('id').format('L, LTS')
     },
+    DateFormatAgo(item) {
+      return moment(item).locale('id').fromNow()
+    },
     NumberFormat(num) {
       return Number(num).toLocaleString()
     },

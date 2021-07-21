@@ -25,10 +25,10 @@
           </div>
           <div class="row">
             <h5 class="mt-5 mb-3">Komentar :</h5>
-            <div class="mb-3">
-              <form action="">
-                <div class="col-12">
-                  <Editor placeholder="Tulis Komentar kamu" v-model="value" editorStyle="height: 150px">
+            <div class="mb-3" v-if="authenticated">
+              <form @submit.prevent="postComment">
+                <div class="col-12 editor-container">
+                  <Editor :class="{'p-invalid': formErrors.message && formErrors.message.length > 0}" placeholder="Tulis Komentar kamu" v-model="message" editorStyle="height: 150px">
                     <template #toolbar>
                       <span class="ql-formats">
                         <button class="ql-bold"></button>
@@ -37,11 +37,15 @@
                       </span>
                     </template>
                   </Editor>
+                  <small class="p-error" v-if="formErrors.message">*{{formErrors.message[0]}}</small>
                 </div>
                 <div class="col-12 mt-2 text-end">
-                  <Button label="Post Comment" icon="pi pi-send" iconPos="right" autofocus />
+                  <Button type="submit" label="Post Comment" :disabled="btnLoading" :icon="btnLoading ? 'pi pi-spin pi-spinner' : 'pi pi-send'" iconPos="right" autofocus />
                 </div>
               </form>
+            </div>
+            <div v-else>
+              <div class="alert alert-info text-center">Login terlebih dahulu agar bisa berkomentar</div>
             </div>
             <div class="row mb-3">
               <div class="col-md-2">
@@ -79,6 +83,11 @@ export default {
         apiURL: appConfig.apiURL,
       }
     },
+    data(){
+      return{
+        message: ''
+      }
+    },
     components:{
       Navbar,
       Editor
@@ -88,6 +97,8 @@ export default {
         article: "article/article",
         authenticated: "auth/authenticated",
         user: "auth/user",
+        btnLoading: "btnLoading",
+        formErrors: "formErrors",
       }),
     },
     created(){
@@ -100,6 +111,9 @@ export default {
             this.$router.push({name:'not-found'})
           }
         })
+      },
+      postComment(){
+        this.$store.dispatch('comment/create', {slug:this.$route.params.slug, message:this.message})
       }
     },
 }

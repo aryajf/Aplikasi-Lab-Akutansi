@@ -23,23 +23,21 @@ export default({
     actions: {
         async index({commit},slug){
             try{
-                let res = await axios.get(`comments/${slug}`)
+                let res = await axios.get(`article/comments/${slug}`)
                 commit('SET_COMMENTS', res.data)
                 return res.data
             }catch(err){
                 return err
             }
         },
-        async create({commit, dispatch}, credentials){
+        async create({commit, dispatch}, data){
             commit('SET_BUTTON_LOADING', true, {root: true})
             commit('SET_FORM_ERRORS', [], {root: true})          
             try{
-                 await axios.post('comments', credentials).then(response =>{
+                 await axios.put(`article/comments/${data.slug}`, {message: data.message}).then(response =>{
+                    window.notyf.success(response.data.message)
+                    commit('SET_BUTTON_LOADING', false, {root: true})
                     dispatch('index')
-                    setTimeout(function () {
-                        window.notyf.success(response.data.message)
-                        commit('SET_BUTTON_LOADING', false, {root: true})
-                    }, 3000)
                     return response
                 })
             }catch(err){
@@ -56,7 +54,7 @@ export default({
         async delete({state,commit, dispatch}, slug){
             commit('SET_BUTTON_LOADING', true, {root: true})
             try{
-                let response = await axios.delete(`comments/${slug}`)
+                let response = await axios.delete(`article/comments/${slug}`)
                 commit('SET_BUTTON_LOADING', false, {root: true})        
                 window.notyf.success(response.data.message)
                 if(state.comments.length == 1){

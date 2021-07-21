@@ -47,6 +47,12 @@ h1{
 h3{
     color: #333;
 }
+
+.editor-container .p-invalid{
+    border: 1px solid red;
+    border-radius: 4px;
+}
+
 .show-article-header{
     margin: 120px 0;
 }

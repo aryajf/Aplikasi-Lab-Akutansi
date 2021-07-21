@@ -8,43 +8,26 @@ module.exports = {
     index: async(req, res) => {
     },
     store: async(req, res) => {
-        let slug, title = req.body.title
-        title == null ? slug = title : slug = createSlug(title)
-
-        let articleReq = {
-            title: req.body.title,
-            slug: slug,
-            short_desc: req.body.short_desc,
-            long_desc: req.body.long_desc,
-            cover: '',
+        let article = await Article.findOne({where: {slug: req.params.slug}})
+        let commentReq = {
+            message: req.body.message,
+            user_id: req.decoded.id,
+            article_id: article.id
         }
 
-        if(req.files.cover){
-            articleReq.cover = req.files.cover[0].filename
-        }
-
-        if(articleValidation(articleReq) != null){
-            res.status(400).send(articleValidation(articleReq))
+        if(commentValidation(commentReq) != null){
+            res.status(400).send(commentValidation(commentReq))
             return
         }
         
         try{
-            let checkSlug = await Article.findOne({where: {slug: articleReq.slug}})
-            if(checkSlug){
-                articleReq.slug = createSlug(req.body.title) + '-' + new Date().getTime()
-            }
-
-            let newArticle = await Article.create(articleReq)
-
-            makeDirectory(articleCoverPath)
-            compressImage('public/uploads/'+req.files.cover[0].filename, articleCoverPath, req.files.cover[0].path)
+            let newComment = await Comment.create(commentReq)
 
             res.status(201).json({
                 data: {
-                    slug: newArticle.slug,
-                    title: newArticle.title
+                    message: newComment.message
                 },
-                message: 'Article berhasil ditambah',
+                message: 'Komentar berhasil ditambah',
                 request: {
                     method: req.method,
                     url: process.env.BASE_URL + req.url
@@ -52,10 +35,10 @@ module.exports = {
                 status: true,
             })
         }catch(err){
-            deleteFile(req.files.cover[0].path)
+            console.log(err);
             res.status(400).json({
                 error: err.message,
-                message: 'Terjadi kesalahan saat menambah article',
+                message: 'Terjadi kesalahan saat menambah komentar',
                 status: false
             })
         }
@@ -84,19 +67,12 @@ module.exports = {
     },
 }
 
-function findArticle(slug){
-    return Article.findOne({where: {slug: slug}})
-}
-
-function articleValidation(dataRequest){
+function commentValidation(dataRequest){
     let rules = {
-        title: 'required|min:3',
-        short_desc: 'required',
-        long_desc: 'required',
-        cover: 'required',
-    };
+        message: 'required',
+    }
     
-    let validation = new Validator(dataRequest, rules, validatorMessage);
+    let validation = new Validator(dataRequest, rules, validatorMessage)
     if(validation.fails()){
         return {
             message: "Harap isi form dengan benar",

@@ -5,6 +5,7 @@ var router = express.Router()
 const auth = require('../controllers/auth')
 const user = require('../controllers/user')
 const article = require('../controllers/article')
+const comments = require('../controllers/comments')
 
 // CALL MIDDLEWARE
 const checkAuth = require('../middleware/checkAuth')
@@ -43,6 +44,11 @@ router.route('/article')
 // SEARCH article
 router.route('/article/search/:keyword')
   .get(article.search)
+
+router.route('/article/comments/:slug')
+  .get(comments.index)
+  .put(checkAuth, comments.store)
+  .delete(checkAuth, comments.delete)
 
 router.route('/article/:slug')
   .get(article.show)

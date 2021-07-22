@@ -2,13 +2,6 @@
     <div id="article">
         <navbar bg="" theme="navbar-light"/>
         <div id="show-article" class="show-article py-5">
-        <svg id="wave-up" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-        <linearGradient x1="0" y1="100%" x2="100%" y2="100%" id="gradient">
-            <stop stop-color="#ddd" offset="0%"/>
-            <stop stop-color="#eee" offset="100%"/>
-        </linearGradient>
-        <path fill="url(#gradient)" fill-opacity="1" d="M0,224L24,186.7C48,149,96,75,144,85.3C192,96,240,192,288,197.3C336,203,384,117,432,74.7C480,32,528,32,576,32C624,32,672,32,720,42.7C768,53,816,75,864,112C912,149,960,203,1008,202.7C1056,203,1104,149,1152,154.7C1200,160,1248,224,1296,224C1344,224,1392,160,1416,128L1440,96L1440,0L1416,0C1392,0,1344,0,1296,0C1248,0,1200,0,1152,0C1104,0,1056,0,1008,0C960,0,912,0,864,0C816,0,768,0,720,0C672,0,624,0,576,0C528,0,480,0,432,0C384,0,336,0,288,0C240,0,192,0,144,0C96,0,48,0,24,0L0,0Z"></path>
-        </svg>
         <div class="container pt-5">
             <div class="container">
             <div class="row">
@@ -47,28 +40,33 @@
             <div v-else>
               <div class="alert alert-info text-center">Login terlebih dahulu agar bisa berkomentar</div>
             </div>
-            <div class="container" style="overflow-y:scroll;height:100vh">
-              <div class="row" v-for="item in article.comment" :key="item.id">
-                <div class="col-md-2">
-                  <img v-if="item.user.avatar" :src="apiURL+'images/avatars/'+item.user.avatar" style="border:0;" class="img-thumbnail rounded-circle" :alt="item.user.nama">
-                  <img v-else src="@/assets/images/no-avatar.png" style="border:0;" class="img-thumbnail" :alt="item.user.nama">
-                </div>
-                <div class="col-md-10 align-self-center">
-                  <div class="row">
-                    <div class="col">
-                      <h5>{{item.user.nama}}</h5>
-                    </div>
-                    <div class="col">
-                      <div class="text-end">
-                        <small>{{DateFormatAgo(item.updatedAt)}}</small>
+            <template v-if="article.comment">
+            <template v-if="article.comment.length !== 0">
+              <div class="container" style="overflow-y:auto;height:100vh">
+                <div class="row" v-for="item in article.comment" :key="item.id">
+                  <div class="col-md-2 my-3">
+                    <img v-if="item.user.avatar" :src="apiURL+'images/avatars/'+item.user.avatar" style="border:0;" class="img-thumbnail rounded-circle" :alt="item.user.nama">
+                    <img v-else src="@/assets/images/no-avatar.png" style="border:0;" class="img-thumbnail" :alt="item.user.nama">
+                  </div>
+                  <div class="col-md-10 align-self-center">
+                    <div class="row">
+                      <div class="col">
+                        <h5>{{item.user.nama}}</h5>
+                      </div>
+                      <div class="col">
+                        <div class="text-end">
+                          <small>{{DateFormatAgo(item.updatedAt)}}</small>
+                        </div>
                       </div>
                     </div>
+                    <div v-html="item.message"></div>
                   </div>
-                  <div v-html="item.message"></div>
+                  <hr class="my-3">
                 </div>
-                <hr class="my-3">
               </div>
-            </div>
+            </template>
+            <div v-else class="alert alert-info text-center">Belum ada yang berkomentar di artikel ini</div>
+            </template>
           </div>
         </div>
       </div>

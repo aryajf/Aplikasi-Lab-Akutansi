@@ -29,6 +29,7 @@
     position: relative;
     overflow: hidden;
     #wave-up{
+        margin-top:45px;
         position: absolute;
         top: 0;
         left: 0;
@@ -93,5 +94,13 @@
     }
     .show-article-header{
         margin: 50px 0;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .aboutpage{
+        #wave-up{
+            margin-top:20px;
+        }
     }
 }

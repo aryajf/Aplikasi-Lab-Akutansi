@@ -193,6 +193,7 @@ export default {
     computed: {
         ...mapGetters({
             formErrors: "formErrors",
+            btnLoading: "btnLoading",
         }),
     },
     methods:{

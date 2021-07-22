@@ -5,15 +5,15 @@
                 <div class="card-body">
                     <form @submit.prevent="register">
                     <div class="row mb-3">
-                        <div class="col">
+                        <div class="col-md-4">
                             <router-link to="/">
                         <Button class="p-button-text" label="Back to home" icon="pi pi-arrow-left" iconPos="left" /></router-link>
                         </div>
-                        <div class="col">
+                        <div class="col-md-4 d-flex justify-content-center">
                             <SelectButton :class="{'p-invalid': formErrors.role && formErrors.role.length > 0}" v-model="form.role" :options="roleList" />
                             <small class="p-error" v-if="formErrors.role">*{{formErrors.role[0]}}</small>
                         </div>
-                        <div class="col d-flex justify-content-end">
+                        <div class="col-md-4 d-flex justify-content-end">
                             <router-link to="/login">
                         <Button class="p-button-text" label="Go To Login" icon="pi pi-arrow-right" iconPos="right" /></router-link>
                         </div>

@@ -4,7 +4,7 @@
         <imageCropper />
         <div id="profile" class="container-fluid">
             <div style="height:100vh;" class="row align-middle align-items-center d-flex justify-content-center">
-                <div class="card" style="width:40%;" data-aos="fade-down" data-aos-offset="-500" data-aos-duration="1500">
+                <div id="cardChangePassword" class="card" data-aos="fade-down" data-aos-offset="-500" data-aos-duration="1500">
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
@@ -110,4 +110,12 @@ export default {
 <style lang="scss">
     @import "@/assets/sass/app.scss";
     @import "@/assets/sass/profile.scss";
+    #cardChangePassword{
+        width:100%;
+    }
+    @media screen and (min-width: 960px) {
+        #cardChangePassword{
+        width:40%;
+    }
+    }
 </style>

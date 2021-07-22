@@ -25,9 +25,6 @@ import 'cropperjs/dist/cropper.css'
 // Vue Counter
 import VueJsCounter from 'vue-js-counter'
 
-// Vue Carousel
-import VueCarousel from '@chenfengyuan/vue-carousel';
-
 // Axios
 import axios from 'axios'
 axios.defaults.baseURL = appConfig.apiURL
@@ -42,5 +39,5 @@ import VueCountdown from '@chenfengyuan/vue-countdown'
 require('@/store/subscriber')
 
 store.dispatch('auth/attempt', localStorage.getItem('token')).then(() => {
-    createApp(App).use(store).use(router).use(PrimeVue).component('Dialog',Dialog).component('Button',Button).component("Paginator", Paginator).component(VueCarousel.name, VueCarousel).component('VueJsCounter',VueJsCounter).component(VueCountdown.name, VueCountdown).mount('#app')
+    createApp(App).use(store).use(router).use(PrimeVue).component('Dialog',Dialog).component('Button',Button).component("Paginator", Paginator).component('VueJsCounter',VueJsCounter).component(VueCountdown.name, VueCountdown).mount('#app')
 })

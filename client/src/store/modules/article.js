@@ -73,15 +73,14 @@ export default({
             commit('SET_BUTTON_LOADING', true, {root: true})
             commit('SET_FORM_ERRORS', [], {root: true})          
             try{
-                 await axios.post('article', credentials).then(response =>{
-                    dispatch('index')
-                    setTimeout(function () {
-                        window.notyf.success(response.data.message)
-                        commit('SET_BUTTON_LOADING', false, {root: true})        
-                        router.push('/article')
-                    }, 3000)
-                    return response
-                })
+                 let response = await axios.post('article', credentials)
+                dispatch('index')
+                setTimeout(function () {
+                    window.notyf.success(response.data.message)
+                    commit('SET_BUTTON_LOADING', false, {root: true})        
+                    router.push('/article')
+                }, 3000)
+                return response
             }catch(err){
                 if(err.response){
                     if(err.response.data.errors){

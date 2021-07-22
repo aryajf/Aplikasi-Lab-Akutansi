@@ -139,7 +139,7 @@ module.exports = {
                         <h1 style="color:#fff;text-align:center;background-color:#333;">Verifikasi Email anda</h1>
                         <div style="padding: auto 10px;">
                             <h3>Link akan kadaluarsa dalam 1 hari | Harap jangan bagikan link ini kepada orang lain yaa :)</h3>
-                            <a href='${HOME_URL}verify/${req.body.email}/${token}' target='_blank'>Klik Disini Untuk Verifikasi Email</a>
+                            <a href='${HOME_URL}/verify/${req.body.email}/${token}' target='_blank'>Klik Disini Untuk Verifikasi Email</a>
                         </div>
                     </div>
                     `,
